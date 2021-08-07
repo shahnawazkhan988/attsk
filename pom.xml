@@ -19,7 +19,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 		<sonar.projectKey>shahnawazkhan988_attsk</sonar.projectKey>
   		<sonar.organization>shahnawazkhan988</sonar.organization>
-  		<sonar.hosts.url>https://sonarcloud.io</sonar.hosts.url>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
   		<sonar.coverage.exclusions>
             **/domains/*.*,
