@@ -73,14 +73,14 @@
                 <version>3.9.0.2155</version>
             </plugin>
             <!-- Code Coveralls -->
-            <plugin>
+            <!--  <plugin>
 			    <groupId>org.eluder.coveralls</groupId>
 			    <artifactId>coveralls-maven-plugin</artifactId>
 			    <version>4.3.0</version>
-			</plugin>
+			</plugin>-->
 			
 			<!-- JaCoCo Maven plugin -->
-			<plugin>
+			 <!--  <plugin>
 		    <groupId>org.jacoco</groupId>
 		    <artifactId>jacoco-maven-plugin</artifactId>
 		    <version>0.7.6.201602180812</version>
@@ -92,7 +92,7 @@
 		            </goals>
 		        </execution>
 		    </executions>
-		</plugin>
+		</plugin>-->
 		</plugins>
 	</build>
 </project>
