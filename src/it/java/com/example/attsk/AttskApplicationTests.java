@@ -1,13 +1,16 @@
 package com.example.attsk;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.test.context.junit.jupiter.*;
 
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-class AttskApplicationTests {
+public class AttskApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }

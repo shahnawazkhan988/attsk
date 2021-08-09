@@ -38,10 +38,10 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml', '**/*.yml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Unit and Integration Tests
-        run: mvn verify -Pjacoco
+        run: mvn verify -Pjacoco -X
       - name: Coveralls Report
         run: >
-          mvn coveralls:report
+          mvn coveralls:report -X
           -DrepoToken=$COVERALLS_REPO_TOKEN
           -DpullRequest=${{ github.event.pull_request.number }}
         env: 
