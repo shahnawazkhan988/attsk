@@ -168,7 +168,7 @@
 	        <plugin>
 	          <groupId>org.eluder.coveralls</groupId>
 	          <artifactId>coveralls-maven-plugin</artifactId>
-	          <version>${project.version}</version>
+	          <version>4.3.0</version>
 	         <!--  <dependencies>-->
 	            <!-- This is required when using JDK 9 or higher
 	              since javax.xml.bind has been removed from the JDK -->
