@@ -35,8 +35,17 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml', '**/*.yml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Unit and Integration Tests
+        run: mvn verify -Pjacoco
+      - name: Coveralls Report
+        run: >
+          mvn coveralls:report
+          -DrepoToken=$COVERALLS_REPO_TOKEN
+          -DpullRequest=${{ github.event.pull_request.number }}
+        env: 
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}    
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
