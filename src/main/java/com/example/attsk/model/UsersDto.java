@@ -2,11 +2,15 @@ package com.example.attsk.model;
 
 import java.util.*;
 
-public class Users 
+import javax.persistence.*;
+
+@Entity
+public class UsersDto 
 {
-	
+	@Id
+	@GeneratedValue
 	private int id;
-	private String userName;
+	private String userName;	
 	private String userMatricola;
 	private String userPass;
 	private String userRole;
@@ -14,7 +18,7 @@ public class Users
 	
 	
 	
-	public Users(int id, String userName, String userMatricola, String userPass, String userRole) {
+	public UsersDto(int id, String userName, String userMatricola, String userPass, String userRole) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -55,11 +59,14 @@ public class Users
 		this.userRole = userRole;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Users [id=" + id + ", userName=" + userName + ", userMatricola=" + userMatricola + ", userPass="
+		return "UsersDto [id=" + id + ", userName=" + userName + ", userMatricola=" + userMatricola + ", userPass="
 				+ userPass + ", userRole=" + userRole + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -74,7 +81,7 @@ public class Users
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Users other = (Users) obj;
+		UsersDto other = (UsersDto) obj;
 		
 		return Objects.equals(id, other.id) && Objects.equals(userMatricola, other.userMatricola)&& Objects.equals(userName, other.userName)&& Objects.equals(userPass, other.userPass) && userRole == other.userRole;
 	}

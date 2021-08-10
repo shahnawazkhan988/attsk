@@ -1,16 +1,8 @@
-DROP TABLE IF EXISTS mensauser;
-CREATE TABLE mensauser (
-    id INT AUTO_INCREMENT  PRIMARY KEY,
-    matricola int(128) UNIQUE,
-    password VARCHAR(256),
-    enabled VARCHAR(256)
-);
-
-
-DROP TABLE IF EXISTS tuser;
-CREATE TABLE tuser (
-    id INT AUTO_INCREMENT  PRIMARY KEY,
-    matricola int(128) UNIQUE,
-    password VARCHAR(256),
-    enabled VARCHAR(256)
+DROP TABLE IF EXISTS UsersDto;
+CREATE TABLE UsersDto (
+    Id INT AUTO_INCREMENT  PRIMARY KEY,
+    userName VARCHAR(256),
+    userMatricola VARCHAR(256),
+    userPass VARCHAR(256),
+    userRole VARCHAR(256)
 );
