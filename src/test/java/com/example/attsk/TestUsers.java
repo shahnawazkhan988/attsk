@@ -1,4 +1,4 @@
-package com.example.attsk.test;
+package com.example.attsk;
 
 import static org.junit.jupiter.api.Assertions.*;
 
