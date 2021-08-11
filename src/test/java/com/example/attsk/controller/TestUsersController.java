@@ -91,4 +91,36 @@ public class TestUsersController
 //	}
 	
 	
+	@Test
+	public void test_createNewUser()
+	{
+		//given
+		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+				
+		//when
+		when(usersController.createNewUser(users))
+				
+		//then
+		.thenReturn(users);	
+				
+		//assert
+		assertEquals(users, usersController.createNewUser(users));
+		
+	}
+	
+	@Test
+	public void test_deleteUser()
+	{
+		//given
+		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+		
+		//delete
+		usersController.deleteUser(users);
+		
+		//verify
+		verify(usersServiceImpl, times(1)).deleteUser(users);
+	}
+	
+	
+	
 }

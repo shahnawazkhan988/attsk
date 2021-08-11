@@ -20,198 +20,257 @@
 		<sonar.projectKey>shahnawazkhan988_attsk</sonar.projectKey>
   		<sonar.organization>shahnawazkhan988</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-  		<!-- For SonarQube -->
-	    <sonar.coverage.jacoco.xmlReportPaths>
-	      ${project.reporting.outputDirectory}/jacoco/jacoco.xml
-	    </sonar.coverage.jacoco.xmlReportPaths>
-	    <!-- Also collects integration tests -->
-	    <sonar.junit.reportPaths>
-	      ${project.build.directory}/surefire-reports,
-	      ${project.build.directory}/failsafe-reports
-	    </sonar.junit.reportPaths>
-	    <!-- Also scans HTML files -->
-	    <sonar.sources>
-	      pom.xml,
-	      ${project.build.sourceDirectory},
-	      ${basedir}/src/main/resources
-	    </sonar.sources>
-	    <!-- Exclude non covered files -->
-	    <sonar.coverage.exclusions>
-	      **/*Application.*,
-	      **/model/*
-	    </sonar.coverage.exclusions>
-	    <!-- For each rule to be ignore, add another eXX and two corresponding 
-	      properties with eXX in the name as below -->
-	    <sonar.issue.ignore.multicriteria>e11</sonar.issue.ignore.multicriteria>
-	    <!-- "Tests should include assertions" disabled on some classes like 
-	      *ApplicationTests which just checks that the Spring application can start, 
-	      without any assertion -->
-	    <sonar.issue.ignore.multicriteria.e11.ruleKey>
-	      java:S2699
-	    </sonar.issue.ignore.multicriteria.e11.ruleKey>
-	    <sonar.issue.ignore.multicriteria.e11.resourceKey>
-	      **/*ApplicationTests.java
-	    </sonar.issue.ignore.multicriteria.e11.resourceKey>
-	  </properties>
-	
-	  <dependencies>
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-actuator</artifactId>
-	    </dependency>
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-data-jpa</artifactId>
-	    </dependency>
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-	    </dependency>
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-web</artifactId>
-	    </dependency>
-	
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-devtools</artifactId>
-	      <scope>runtime</scope>
-	    </dependency>
-	    <dependency>
-	      <groupId>com.h2database</groupId>
-	      <artifactId>h2</artifactId>
-	      <scope>runtime</scope>
-	    </dependency>
-	    <dependency>
-	      <groupId>org.springframework.boot</groupId>
-	      <artifactId>spring-boot-starter-test</artifactId>
-	      <scope>test</scope>
-	    </dependency>
-	  </dependencies>
-	
-	  <build>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-maven-plugin</artifactId>
-	      </plugin>
-	      <plugin>
-	        <groupId>org.codehaus.mojo</groupId>
-	        <artifactId>build-helper-maven-plugin</artifactId>
-	        <executions>
-	          <execution>
-	            <id>add-test-source</id>
-	            <phase>process-resources</phase>
-	            <goals>
-	              <goal>add-test-source</goal>
-	            </goals>
-	            <configuration>
-	              <sources>
-	                <source>src/it/java</source>
-	              </sources>
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <configuration>
-	          <includes>
-	            <include>**/*Test.java</include>
-	          </includes>
-	        </configuration>
-	      </plugin>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-failsafe-plugin</artifactId>
-	        <executions>
-	          <execution>
-	            <configuration>
-	              <includes>
-	                <include>**/*ApplicationTests.java</include>
-	                <include>**/*IT.java</include>
-	              </includes>
-	            </configuration>
-	            <goals>
-	              <goal>integration-test</goal>
-	              <goal>verify</goal>
-	            </goals>
-	          </execution>
-	        </executions>
-	      </plugin>
-	    </plugins>
-	    <pluginManagement>
-	      <plugins>
-	        <plugin>
-	          <groupId>org.jacoco</groupId>
-	          <artifactId>jacoco-maven-plugin</artifactId>
-	          <version>0.8.6</version>
-	          <configuration>
-	            <excludes>
-	              <exclude>**/*Application.*</exclude>
-	              <exclude>**/model/*</exclude>
-	            </excludes>
-	          </configuration>
-	          <executions>
-	            <execution>
-	              <goals>
-	                <!-- binds by default to the phase "initialize" -->
-	                <goal>prepare-agent</goal>
-	                <!-- binds by default to the phase "verify" -->
-	                <goal>report</goal>
-	              </goals>
-	            </execution>
-	          </executions>
-	        </plugin>
-	        <!-- You must run coveralls:report explicitly -->
-	        <plugin>
-	          <groupId>org.eluder.coveralls</groupId>
-	          <artifactId>coveralls-maven-plugin</artifactId>
-	          <version>4.3.0</version>
-	           <dependencies>
-	            <!-- This is required when using JDK 9 or higher
-	              since javax.xml.bind has been removed from the JDK -->
-	              <dependency>
-	              <groupId>javax.xml.bind</groupId>
-	              <artifactId>jaxb-api</artifactId>
-	              <version>2.3.1</version>
-	            </dependency>
-	          </dependencies>
-	        </plugin>
-	        <plugin>
-	          <groupId>org.sonarsource.scanner.maven</groupId>
-	          <artifactId>sonar-maven-plugin</artifactId>
-	          <version>3.8.0.2131</version>
-	        </plugin>
-	      </plugins>
-	    </pluginManagement>
-	  </build>
-	
-	  <profiles>
-	    <profile>
-	      <id>jacoco</id>
-	      <build>
-	        <plugins>
-	          <plugin>
-	            <groupId>org.jacoco</groupId>
-	            <artifactId>jacoco-maven-plugin</artifactId>
-	            <configuration>
-	              <!-- Don't use the default property so that we'll do code 
-	                coverage only for surefire tests (not for failsafe) -->
-	              <propertyName>surefireArgLine</propertyName>
-	            </configuration>
-	          </plugin>
-	          <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-surefire-plugin</artifactId>
-	            <configuration>
-	              <!-- Code coverage for surefire tests only -->
-	              <argLine>${surefireArgLine}</argLine>
-	            </configuration>
-	          </plugin>
-	        </plugins>
-	      </build>
-	    </profile>
-	  </profiles>
+  		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--        MapStruct-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <compilerArg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!--            FailSafe-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <parallel>none</parallel>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--            Coveralls-->
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <jacocoReports>
+                        <jacocoReport>${project.build.directory}/jacoco-ut/jacoco.xml</jacocoReport>
+                        <jacocoReport>${project.build.directory}/jacoco-it/jacoco.xml</jacocoReport>
+                    </jacocoReports>
+                    <failOnServiceError>false</failOnServiceError>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                        <version>2.2.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!--          Jacoco  -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.6</version>
+                <configuration>
+                    <excludes>
+                        
+                        <exclude>**/AttskApplication.*</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--            SonarCloud-->
+            <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.0.2155</version>
+            </plugin>
+
+            <!--  PIT Mutation-->
+
+          <!--  <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.9</version>
+                <executions>
+                    <execution>
+                        <id>pit-report</id> -->
+                        <!-- optional, this example attached the goal into mvn test phase -->
+                      <!--   <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies> -->
+                    <!-- https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin -->
+                   <!--  <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>0.12</version>
+                    </dependency>
+
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>com.example.attsk.controller.*</param>
+                        <param>com.example.attsk.services.*</param>
+                    </targetClasses>
+                    <excludedTestClasses>
+                        <param>com.example.attsk.services.**/*IT.java</param>
+                    </excludedTestClasses>
+                    <targetTests>
+                        <param>com.example.attsk.*</param>
+                        <param>com.example.attsk.services.*</param>
+                    </targetTests>
+                    <mutators>
+                        <mutator>DEFAULTS</mutator>
+                    </mutators>
+                    <mutationThreshold>80</mutationThreshold>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                    </outputFormats>
+
+                </configuration>
+            </plugin>-->
+        </plugins> 
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.6</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.6.3</version>
+                <configuration>
+                    <skip>false</skip>
+                    <reportsDirectory>${project.build.directory}/pit-custom-output-dir</reportsDirectory>
+                    <sourceDataFormats>
+                        <sourceDataFormat>HTML</sourceDataFormat>
+                    </sourceDataFormats>
+                    <siteReportName>my-pit-report-name</siteReportName>
+                    <siteReportDescription>my pit report custom description</siteReportDescription>
+                    <siteReportDirectory>pit-custom-site-directory</siteReportDirectory>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
 </project>
