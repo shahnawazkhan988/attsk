@@ -9,12 +9,13 @@ import com.example.attsk.model.*;
 import com.example.attsk.service.*;
 
 @RestController
+@RequestMapping("/api/v1/")
 public class UsersController 
 {
 	
 	//add IUsersService
 	@Autowired
-	IUsersService usersServiceRef;
+	UsersServiceImpl usersServiceRef;
 	
 	@GetMapping("/users")
 	public List<UsersDto> getAllUsers()
@@ -27,6 +28,19 @@ public class UsersController
 	{
 		return usersServiceRef.getUserById(userId);
 		
+	}
+	
+	@PostMapping("/users")
+	public UsersDto createNewUser(@RequestBody UsersDto users)
+	{
+		return usersServiceRef.createNewUser(users);
+	}
+	
+	@DeleteMapping("/users")
+	public UsersDto deleteUser(@RequestBody UsersDto users)
+	{
+		usersServiceRef.deleteUser(users);
+		return users;
 	}
 
 }

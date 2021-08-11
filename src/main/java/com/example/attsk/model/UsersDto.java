@@ -13,10 +13,7 @@ public class UsersDto
 	private String userName;	
 	private String userMatricola;
 	private String userPass;
-	private String userRole;
-	
-	
-	
+	private String userRole;	
 	
 	public UsersDto(int id, String userName, String userMatricola, String userPass, String userRole) {
 		super();
@@ -26,7 +23,11 @@ public class UsersDto
 		this.userPass = userPass;
 		this.userRole = userRole;
 	}
-	
+
+	public UsersDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public int getId() {
 		return id;

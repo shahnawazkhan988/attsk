@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS UsersDto;
-CREATE TABLE UsersDto (
+DROP TABLE IF EXISTS usersdto;
+CREATE TABLE usersdto (
     Id INT AUTO_INCREMENT  PRIMARY KEY,
     userName VARCHAR(256),
     userMatricola VARCHAR(256),
