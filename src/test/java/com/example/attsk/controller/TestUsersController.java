@@ -28,9 +28,24 @@ public class TestUsersController
 	{
 		
 		//given
+		
 		List<UsersDto> users = new ArrayList<UsersDto>();
-		users.add(new UsersDto(1, "Shahnawaz", "70001", "123456", "ST"));
-		users.add(new UsersDto(2, "User2", "70002", "123456", "ST"));
+		UsersDto user = new UsersDto();
+		UsersDto user1 = new UsersDto();
+		user.setId(1);
+		user.setUserName("Shahnawaz");
+		user.setUserMatricola("70001");
+		user.setUserPass("123456");
+		user.setUserRole("ST");
+		
+		user1.setId(1);
+		user1.setUserName("User2");
+		user1.setUserMatricola("70002");
+		user1.setUserPass("123456");
+		user1.setUserRole("ST");
+		
+		users.add(user);
+		users.add(user1);
 		
 		//when
 		when(usersServiceImpl.getAllUsers())
@@ -95,8 +110,13 @@ public class TestUsersController
 	public void test_createNewUser()
 	{
 		//given
-		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
-				
+		UsersDto users = new UsersDto();
+		users.setId(1);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
+		
 		//when
 		when(usersController.createNewUser(users))
 				
@@ -112,7 +132,12 @@ public class TestUsersController
 	public void test_deleteUser()
 	{
 		//given
-		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+		UsersDto users = new UsersDto();
+		users.setId(1);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
 		
 		//delete
 		usersController.deleteUser(users);

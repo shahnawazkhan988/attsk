@@ -11,6 +11,13 @@ public class TestUsers {
 	
 	@Test
 	public void test() {
-		assertNotNull(new UsersDto(1, "Test User", "70001", "pass123", "st"));
+		
+		UsersDto users = new UsersDto();
+		users.setId(1);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
+		assertNotNull(users);
 	}
 }

@@ -26,11 +26,22 @@ public class TestUsersServiceImpl {
 	private UsersServiceImpl usersServiceImpl;
 	
 	@Test
-	public void test_getAllUsers()
+	public void test_getAllUsers() 
 	{	//given
-		UsersDto user1 = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
-		UsersDto user2 = new UsersDto(2, "User2", "70002", "123456", "ST");
+		UsersDto user1 = new UsersDto();
+		UsersDto user2 = new UsersDto();
+		user1.setId(1);
+		user1.setUserName("Shahnawaz");
+		user1.setUserMatricola("70001");
+		user1.setUserPass("123456");
+		user1.setUserRole("ST");
 		
+		user2.setId(1);
+		user2.setUserName("User2");
+		user2.setUserMatricola("70002");
+		user2.setUserPass("123456");
+		user2.setUserRole("ST");
+				
 		//when
 		when(iUsersDao.findAll())
 		
@@ -46,7 +57,12 @@ public class TestUsersServiceImpl {
 	public void test_getUserById_found()
 	{
 		//given
-		UsersDto user = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+		UsersDto user = new UsersDto();
+		user.setId(1);
+		user.setUserName("Shahnawaz");
+		user.setUserMatricola("70001");
+		user.setUserPass("123456");
+		user.setUserRole("ST");
 		
 		//when
 		when(iUsersDao.findById(1))
@@ -76,7 +92,12 @@ public class TestUsersServiceImpl {
 	public void test_addUsers()
 	{
 		//given
-		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+		UsersDto users = new UsersDto();
+		users.setId(1);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
 		
 		//when
 		when(usersServiceImpl.createNewUser(users))
@@ -93,7 +114,12 @@ public class TestUsersServiceImpl {
 	public void test_deleteUser()
 	{
 		//given
-		UsersDto users = new UsersDto(1, "Shahnawaz", "70001", "123456", "ST");
+		UsersDto users = new UsersDto();
+		users.setId(1);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
 		
 		//delete
 		usersServiceImpl.deleteUser(users);
