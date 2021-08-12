@@ -1,6 +1,7 @@
 package com.example.attsk.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import lombok.*;
 
@@ -11,8 +12,13 @@ public class UsersDto
 	@Id
 	@GeneratedValue
 	private int id;
-	private String userName;	
+	@NotBlank(message = "User Name is required")
+	private String userName;
+	
+	@NotNull(message = "{validation.userMatricola.NotNull}")
+    @Positive(message = "{validation.userMatricola.Positive}")
 	private String userMatricola;
+	@NotBlank(message = "User userPass is required")
 	private String userPass;
 	private String userRole;	
 	

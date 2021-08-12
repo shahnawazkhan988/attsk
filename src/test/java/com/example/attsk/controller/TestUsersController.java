@@ -1,6 +1,8 @@
 package com.example.attsk.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -9,19 +11,43 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
 import org.mockito.junit.jupiter.*;
+import org.springframework.http.*;
+import org.springframework.test.web.servlet.*;
+import org.springframework.test.web.servlet.setup.*;
+import org.springframework.validation.*;
 
 import com.example.attsk.model.*;
 import com.example.attsk.service.*;
+import com.fasterxml.jackson.databind.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
 public class TestUsersController 
 {
-	@InjectMocks 
-	private UsersController usersController;
-	
+	public static final long ID = 1;
+    public static final String USER_NAME = "userName";
+    public static final String USER_Matricola = "userMatricola";
+    public static final String USER_Pass = "userPAss";
+    public static final String USER_Role = "ST";
+    
+//	@InjectMocks 
+//	private UsersController usersController;
+	UsersController usersController;
 	@Mock
 	private UsersServiceImpl usersServiceImpl;
+	
+	@Mock
+    BindingResult bindingResult;
+
+    MockMvc mockMvc;
+    
+    private final ObjectMapper mapper = new ObjectMapper();
+    
+    @BeforeEach
+    void setUp() {
+    	usersController = new UsersController(usersServiceImpl);
+        mockMvc = MockMvcBuilders.standaloneSetup(usersController).build();
+    }
 	
 	@Test
 	public void test_getAllUsers()
@@ -107,24 +133,24 @@ public class TestUsersController
 	
 	
 	@Test
-	public void test_createNewUser()
+	public void test_createNewUser() throws NoSuchMethodException
 	{
 		//given
-		UsersDto users = new UsersDto();
-		users.setId(1);
-		users.setUserName("Shahnawaz");
-		users.setUserMatricola("70001");
-		users.setUserPass("123456");
-		users.setUserRole("ST");
+        UsersDto usersDto = getUsersDto(USER_Matricola);        
+        given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
 		
-		//when
-		when(usersController.createNewUser(users))
+        //when
+		 ResponseEntity<Object> user1 = usersController.createNewUser(usersDto,bindingResult);
+	     System.out.println(user1);
 				
 		//then
-		.thenReturn(users);	
+		assertNotNull(user1.getBody());
 				
 		//assert
-		assertEquals(users, usersController.createNewUser(users));
+		assertEquals(HttpStatus.CREATED,user1.getStatusCode());
+        assertEquals(usersDto.getClass().getDeclaredMethod("getUserMatricola"), Objects.requireNonNull(user1.getBody()).getClass().getDeclaredMethod("getUserMatricola"));
+        then(usersServiceImpl).should().createNewUser(any(UsersDto.class));
+        then(usersServiceImpl).shouldHaveNoMoreInteractions();
 		
 	}
 	
@@ -147,5 +173,13 @@ public class TestUsersController
 	}
 	
 	
-	
+	private UsersDto getUsersDto(String userMatricola) {
+        UsersDto usersDto = new UsersDto();
+        usersDto.setId(0);
+        usersDto.setUserName(USER_NAME);
+        usersDto.setUserMatricola(userMatricola);
+        usersDto.setUserPass(USER_Pass);
+        usersDto.setUserRole(USER_Role);
+        return usersDto;
+    }
 }
