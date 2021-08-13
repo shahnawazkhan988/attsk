@@ -11,12 +11,12 @@ public class UsersDto
 {
 	@Id
 	@GeneratedValue
-	private int id;
+	private Long id;
 	@NotBlank(message = "User Name is required")
 	private String userName;
-	
-	@NotNull(message = "{validation.userMatricola.NotNull}")
-    @Positive(message = "{validation.userMatricola.Positive}")
+	@NotNull(message = "userMatricola is required")
+	@Size(min = 4,max = 5, message = "Please use 4 to 5 characters long")
+	@Column(updatable = false,unique = true)
 	private String userMatricola;
 	@NotBlank(message = "User userPass is required")
 	private String userPass;

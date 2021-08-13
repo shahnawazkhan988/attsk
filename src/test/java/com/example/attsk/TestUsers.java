@@ -13,7 +13,7 @@ public class TestUsers {
 	public void test() {
 		
 		UsersDto users = new UsersDto();
-		users.setId(1);
+		users.setId(1L);
 		users.setUserName("Shahnawaz");
 		users.setUserMatricola("70001");
 		users.setUserPass("123456");

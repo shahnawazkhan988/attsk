@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import com.example.attsk.dao.*;
+import com.example.attsk.exceptions.*;
 import com.example.attsk.model.*;
 
 @Service
@@ -21,7 +22,7 @@ public class UsersServiceImpl {
 	}
 
 	
-	public UsersDto getUserById(int userId) {
+	public UsersDto getUserById(long userId) {
 		// TODO Auto-generated method stub
 		return userDaoRef.findById(userId)
 				.orElse(null);
@@ -30,7 +31,16 @@ public class UsersServiceImpl {
 
 	public UsersDto createNewUser(UsersDto users) {
 		// TODO Auto-generated method stub
-		return userDaoRef.save(users);
+		try 
+		{
+			return userDaoRef.save(users);
+		} 
+		catch (Exception exception) 
+		{
+			// TODO: handle exception
+			throw new DuplicateUserExceptions("Matricola number :"+users.getUserMatricola()+" Already Exists");
+		}
+		
 	}
 
 
@@ -38,6 +48,15 @@ public class UsersServiceImpl {
 		// TODO Auto-generated method stub
 		userDaoRef.delete(users);
 	}
+
+
+	public UsersDto getUserByMatricola(String matricola) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
 
 
 

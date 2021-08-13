@@ -6,7 +6,11 @@ import org.springframework.stereotype.*;
 import com.example.attsk.model.*;
 
 @Repository
-public interface IUsersDao extends JpaRepository<UsersDto, Integer>
+public interface IUsersDao extends JpaRepository<UsersDto, Long>
 {
+	 
+	 UsersDto findByuserMatricola(String matricola);
+
+	//List<UsersDto> findBy(String deptName);
 
 }

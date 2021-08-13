@@ -18,114 +18,127 @@ import com.example.attsk.model.*;
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
 public class TestUsersServiceImpl {
-	
+
 	@Mock
 	private IUsersDao iUsersDao;
-	
+
 	@InjectMocks
 	private UsersServiceImpl usersServiceImpl;
-	
+
 	@Test
-	public void test_getAllUsers() 
-	{	//given
+	public void test_getAllUsers() { // given
 		UsersDto user1 = new UsersDto();
 		UsersDto user2 = new UsersDto();
-		user1.setId(1);
+		user1.setId(1L);
 		user1.setUserName("Shahnawaz");
 		user1.setUserMatricola("70001");
 		user1.setUserPass("123456");
 		user1.setUserRole("ST");
-		
-		user2.setId(1);
+
+		user2.setId(1L);
 		user2.setUserName("User2");
 		user2.setUserMatricola("70002");
 		user2.setUserPass("123456");
 		user2.setUserRole("ST");
-				
-		//when
+
+		// when
 		when(iUsersDao.findAll())
-		
-		//then
-		.thenReturn(new ArrayList<>(Arrays.asList(user1, user2)));
-				
-		//Assert
-		assertThat(usersServiceImpl.getAllUsers()).
-		containsExactly(user1, user2);
+
+				// then
+				.thenReturn(new ArrayList<>(Arrays.asList(user1, user2)));
+
+		// Assert
+		assertThat(usersServiceImpl.getAllUsers()).containsExactly(user1, user2);
 	}
-	
+
 	@Test
-	public void test_getUserById_found()
-	{
-		//given
+	public void test_getUserById_found() {
+		// given
 		UsersDto user = new UsersDto();
-		user.setId(1);
+		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
-		
-		//when
-		when(iUsersDao.findById(1))
-		
-		//then
-		.thenReturn(Optional.of(user));
-			
-		//Assert
+
+		// when
+		when(iUsersDao.findById(1L))
+
+				// then
+				.thenReturn(Optional.of(user));
+
+		// Assert
 		assertThat(usersServiceImpl.getUserById(1)).isSameAs(user);
 	}
-	
+
 	@Test
-	public void test_getUserById_notFound()
-	{	
-		//when	
-		when(iUsersDao.findById(anyInt()))
-		
-		//then
-		.thenReturn(Optional.empty());
-		
-		//Assert
-		assertThat(usersServiceImpl.getUserById(1))
-		.isNull();
+	public void test_getUserById_notFound() {
+		// when
+		when(iUsersDao.findById(anyLong()))
+
+				// then
+				.thenReturn(Optional.empty());
+
+		// Assert
+		assertThat(usersServiceImpl.getUserById(1)).isNull();
 	}
-	
+
 	@Test
-	public void test_addUsers()
-	{
-		//given
+	public void test_addUsers() throws Exception{
+		// given
 		UsersDto users = new UsersDto();
-		users.setId(1);
+		users.setId(1L);
 		users.setUserName("Shahnawaz");
 		users.setUserMatricola("70001");
 		users.setUserPass("123456");
 		users.setUserRole("ST");
-		
-		//when
+
+		// when
 		when(usersServiceImpl.createNewUser(users))
-		
-		//then
-		.thenReturn(users);	
-		
-		//assert
+
+				// then
+				.thenReturn(users);
+
+		// assert
 		assertEquals(users, usersServiceImpl.createNewUser(users));
-		
+
 	}
-	
+
 	@Test
-	public void test_deleteUser()
-	{
-		//given
+	public void test_deleteUser() {
+		// given
 		UsersDto users = new UsersDto();
-		users.setId(1);
+		users.setId(1L);
 		users.setUserName("Shahnawaz");
 		users.setUserMatricola("70001");
 		users.setUserPass("123456");
 		users.setUserRole("ST");
-		
-		//delete
+
+		// delete
 		usersServiceImpl.deleteUser(users);
-		
-		//verify
+
+		// verify
 		verify(iUsersDao, times(1)).delete(users);
 	}
+
+//	@Test
+//	public void test_getUserByMatricola_found() {
+//		// given
+//		UsersDto user = new UsersDto();
+//		user.setId(1L);
+//		user.setUserName("Shahnawaz");
+//		user.setUserMatricola("70001");
+//		user.setUserPass("123456");
+//		user.setUserRole("ST");
+//
+//		// when
+//		when(iUsersDao.findByMatricola("70001"))
+//
+//				// then
+//				.thenReturn(Optional.of(user));
+//
+//		// Assert
+//		assertThat(usersServiceImpl.getUserByMatricola(70001)).isSameAs(user);
+//	}
 
 }
