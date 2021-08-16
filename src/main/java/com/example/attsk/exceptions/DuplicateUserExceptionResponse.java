@@ -10,5 +10,9 @@ public class DuplicateUserExceptionResponse {
         this.userMatricola = userMatricola;
     }
 
+    public String getUserMatricola() {
+    	return userMatricola;
+		
+	}
     
 }
