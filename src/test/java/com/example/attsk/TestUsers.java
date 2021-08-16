@@ -6,11 +6,11 @@ import org.junit.jupiter.api.*;
 
 import com.example.attsk.model.*;
 
-public class TestUsers {
+ class TestUsers {
 
 	
 	@Test
-	public void test() {
+	 void test() {
 		
 		UsersDto users = new UsersDto();
 		users.setId(1L);

@@ -17,7 +17,7 @@ import com.example.attsk.model.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
-public class TestUsersServiceImpl {
+ class TestUsersServiceImpl {
 
 	@Mock
 	private IUsersDao iUsersDao;
@@ -26,7 +26,7 @@ public class TestUsersServiceImpl {
 	private UsersServiceImpl usersServiceImpl;
 
 	@Test
-	public void test_getAllUsers() { // given
+	 void test_getAllUsers() { // given
 		UsersDto user1 = new UsersDto();
 		UsersDto user2 = new UsersDto();
 		user1.setId(1L);
@@ -52,7 +52,7 @@ public class TestUsersServiceImpl {
 	}
 
 	@Test
-	public void test_getUserById_found() {
+	 void test_getUserById_found() {
 		// given
 		UsersDto user = new UsersDto();
 		user.setId(1L);
@@ -72,7 +72,7 @@ public class TestUsersServiceImpl {
 	}
 
 	@Test
-	public void test_getUserById_notFound() {
+	 void test_getUserById_notFound() {
 		// when
 		when(iUsersDao.findById(anyLong()))
 
@@ -84,7 +84,7 @@ public class TestUsersServiceImpl {
 	}
 
 	@Test
-	public void test_addUsers() throws Exception{
+	 void test_addUsers() throws Exception{
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);
@@ -105,7 +105,7 @@ public class TestUsersServiceImpl {
 	}
 
 	@Test
-	public void test_deleteUser() {
+	 void test_deleteUser() {
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);

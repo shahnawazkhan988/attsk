@@ -24,7 +24,7 @@ public class UsersController {
 	UsersServiceImpl usersServiceRef;
 
 	public UsersController(UsersServiceImpl usersServiceImpl) {
-		// TODO Auto-generated constructor stub
+		
 		this.usersServiceRef = usersServiceImpl;
 	}
 
@@ -42,9 +42,9 @@ public class UsersController {
 	@GetMapping("/{matricola}/users")
 	public ResponseEntity<Object> getUserByMatricola(@PathVariable String matricola) {
 		try {
-			var UsersDto = usersServiceRef.getUserByMatricola(matricola);
+			var usersDto = usersServiceRef.getUserByMatricola(matricola);
 			log.debug("Getting User by Matricola:" + matricola);
-			return new ResponseEntity<>(UsersDto, HttpStatus.OK);
+			return new ResponseEntity<>(usersDto, HttpStatus.OK);
 		} catch (Exception exception) {
 			return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
 		}

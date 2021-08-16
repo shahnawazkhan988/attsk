@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
-public class TestUsersController 
+ class TestUsersController 
 {
 	public static final Long ID = 1L;
     public static final String USER_NAME = "userName";
@@ -53,7 +53,7 @@ public class TestUsersController
     }
 	
 	@Test
-	public void test_getAllUsers()
+	 void test_getAllUsers()
 	{
 		
 		//given
@@ -136,7 +136,7 @@ public class TestUsersController
 	
 	
 	@Test
-	public void test_createNewUser() throws NoSuchMethodException
+	 void test_createNewUser() throws NoSuchMethodException
 	{
 		//given
         UsersDto usersDto = getUsersDto(USER_Matricola);        
@@ -216,7 +216,7 @@ public class TestUsersController
 
 	
 	@Test
-	public void test_deleteUser()
+	 void test_deleteUser()
 	{
 		//given
 		UsersDto users = new UsersDto();

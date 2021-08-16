@@ -8,7 +8,6 @@ public class DuplicateUserExceptions extends RuntimeException {
 	
 	public DuplicateUserExceptions(String message) 
 	{
-		// TODO Auto-generated constructor stub
 		super(message);
 	}
 	

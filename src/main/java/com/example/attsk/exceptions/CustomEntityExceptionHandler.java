@@ -12,7 +12,6 @@ public class CustomEntityExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(DuplicateUserExceptions.class)
     protected final ResponseEntity<Object> handleDuplicateUserExp(DuplicateUserExceptions exception){
         var response = new DuplicateUserExceptionResponse(exception.getMessage());
-        System.out.println(response+"idar aya");
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
