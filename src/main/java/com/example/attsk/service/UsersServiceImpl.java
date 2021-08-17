@@ -50,10 +50,7 @@ public class UsersServiceImpl {
 	}
 
 
-	public UsersDto getUserByMatricola(String matricola) {
-		
-		return null;
-	}
+	
 
 
 	

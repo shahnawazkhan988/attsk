@@ -39,16 +39,6 @@ public class UsersController {
 
 	}
 
-	@GetMapping("/{matricola}/users")
-	public ResponseEntity<Object> getUserByMatricola(@PathVariable String matricola) {
-		try {
-			var usersDto = usersServiceRef.getUserByMatricola(matricola);
-			log.debug("Getting User by Matricola:" + matricola);
-			return new ResponseEntity<>(usersDto, HttpStatus.OK);
-		} catch (Exception exception) {
-			return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
 
 	@PostMapping(value = "/users", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> createNewUser(@Valid @RequestBody UsersDto users, BindingResult bindingResult) {
