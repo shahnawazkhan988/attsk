@@ -8,8 +8,6 @@ public class AttskApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AttskApplication.class, args);
-		
-		
 	}
 
 }

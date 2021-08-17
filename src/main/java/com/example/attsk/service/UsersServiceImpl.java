@@ -44,19 +44,15 @@ public class UsersServiceImpl {
 	}
 
 
-	public void deleteUser(UsersDto users) {
-		
-		userDaoRef.delete(users);
+	public void deleteUser(String matricola) {	
+
+		var userDao = userDaoRef.findByuserMatricola(matricola);
+        if(userDao!=null){
+        	userDaoRef.delete(userDao);
+        }else {
+            throw new DuplicateUserExceptions("User with matricola :"+matricola+" does not Exists");
+        }
 	}
-
-
-	
-
-
-	
-
-
-
 	
 
 }

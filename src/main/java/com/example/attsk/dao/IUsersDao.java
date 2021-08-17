@@ -11,6 +11,4 @@ public interface IUsersDao extends JpaRepository<UsersDto, Long>
 	 
 	 UsersDto findByuserMatricola(String matricola);
 
-	//List<UsersDto> findBy(String deptName);
-
 }

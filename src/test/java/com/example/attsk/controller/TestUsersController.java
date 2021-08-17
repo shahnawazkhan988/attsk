@@ -127,8 +127,6 @@ class TestUsersController {
 				.andExpect(content().string("")); // content is empty string
 	}
 
-	
-
 	@Test
 	void test_createNewUser() throws NoSuchMethodException {
 		// given
@@ -159,10 +157,8 @@ class TestUsersController {
 		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
 
 		// When
-		mockMvc.perform(post("/api/v1/users")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(usersDto)))
-				.andExpect(status().isCreated())
+		mockMvc.perform(post("/api/v1/users").contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isCreated())
 				.andExpect(jsonPath("$.userName", equalTo(USER_NAME)))
 				.andExpect(jsonPath("$.userMatricola", equalTo(USER_Matricola1)))
 				.andExpect(jsonPath("$.userPass", equalTo(USER_Pass)))
@@ -206,16 +202,17 @@ class TestUsersController {
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);
-		users.setUserName("Shahnawaz");
-		users.setUserMatricola("70001");
-		users.setUserPass("123456");
-		users.setUserRole("ST");
+		users.setUserName(USER_NAME);
+		users.setUserMatricola(USER_Matricola1);
+		users.setUserPass(USER_Pass);
+		users.setUserRole(USER_Role);
 
-		// delete
-		usersController.deleteUser(users);
+		// when
+		usersController.deleteUser(users.getUserMatricola());
 
-		// verify
-		verify(usersServiceImpl, times(1)).deleteUser(users);
+		// then
+		then(usersServiceImpl).should().deleteUser(any(String.class));
+		then(usersServiceImpl).shouldHaveNoMoreInteractions();
 	}
 
 	private UsersDto getUsersDto(String userMatricola) {

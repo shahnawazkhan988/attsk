@@ -5,13 +5,13 @@ import org.mockito.*;
 
 public class TestAttskApplication {
 
-	@InjectMocks
-	AttskApplication application;
-	
-	@Test
-	void main()
-	{
-		String [] ary = {"start"};
-		application.main(ary);
-	}
+//	@InjectMocks
+//	AttskApplication application;
+//	
+//	@Test
+//	void main()
+//	{
+//		String [] ary = {"start"};
+//		application.main(ary);
+//	}
 }

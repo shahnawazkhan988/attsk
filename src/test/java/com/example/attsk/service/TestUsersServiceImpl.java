@@ -3,6 +3,7 @@ package com.example.attsk.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -17,7 +18,7 @@ import com.example.attsk.model.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
- class TestUsersServiceImpl {
+class TestUsersServiceImpl {
 
 	@Mock
 	private IUsersDao iUsersDao;
@@ -26,7 +27,7 @@ import com.example.attsk.model.*;
 	private UsersServiceImpl usersServiceImpl;
 
 	@Test
-	 void test_getAllUsers() { // given
+	void test_getAllUsers() { // given
 		UsersDto user1 = new UsersDto();
 		UsersDto user2 = new UsersDto();
 		user1.setId(1L);
@@ -52,7 +53,7 @@ import com.example.attsk.model.*;
 	}
 
 	@Test
-	 void test_getUserById_found() {
+	void test_getUserById_found() {
 		// given
 		UsersDto user = new UsersDto();
 		user.setId(1L);
@@ -72,7 +73,7 @@ import com.example.attsk.model.*;
 	}
 
 	@Test
-	 void test_getUserById_notFound() {
+	void test_getUserById_notFound() {
 		// when
 		when(iUsersDao.findById(anyLong()))
 
@@ -84,7 +85,7 @@ import com.example.attsk.model.*;
 	}
 
 	@Test
-	 void test_addUsers() throws Exception{
+	void test_addUsers() throws Exception {
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);
@@ -105,7 +106,7 @@ import com.example.attsk.model.*;
 	}
 
 	@Test
-	 void test_deleteUser() {
+	void test_deleteUser() {
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);
@@ -114,31 +115,15 @@ import com.example.attsk.model.*;
 		users.setUserPass("123456");
 		users.setUserRole("ST");
 
-		// delete
-		usersServiceImpl.deleteUser(users);
+		given(iUsersDao.findByuserMatricola(any())).willReturn(users);
+		// When
+		usersServiceImpl.deleteUser(users.getUserMatricola());
 
+		// then
+		then(iUsersDao).should().delete(users);
+		then(iUsersDao).shouldHaveNoMoreInteractions();
 		// verify
 		verify(iUsersDao, times(1)).delete(users);
 	}
-
-//	@Test
-//	public void test_getUserByMatricola_found() {
-//		// given
-//		UsersDto user = new UsersDto();
-//		user.setId(1L);
-//		user.setUserName("Shahnawaz");
-//		user.setUserMatricola("70001");
-//		user.setUserPass("123456");
-//		user.setUserRole("ST");
-//
-//		// when
-//		when(iUsersDao.findByMatricola("70001"))
-//
-//				// then
-//				.thenReturn(Optional.of(user));
-//
-//		// Assert
-//		assertThat(usersServiceImpl.getUserByMatricola(70001)).isSameAs(user);
-//	}
 
 }
