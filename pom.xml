@@ -213,34 +213,35 @@
 
 			<!-- PIT Mutation -->
 
-			<plugin> 
-			<groupId>org.pitest</groupId> 
-			<artifactId>pitest-maven</artifactId> 
-			<version>1.4.9</version> 
-			<executions> 
-				<execution> 
-				<id>pit-report</id>
-				<!-- optional, this example attached the goal into mvn test phase -->
-				<phase>test</phase> 
-				<goals> 
-					<goal>mutationCoverage</goal> 
-				</goals> 
-				</execution> 
-			</executions> 
-			<dependencies>
-			<!-- https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin -->
-				<dependency> 
-					<groupId>org.pitest</groupId> 
-					<artifactId>pitest-junit5-plugin</artifactId> 
-					<version>0.12</version> 
-				</dependency> 
-			</dependencies> 
-			<configuration> 
-				<targetClasses> 
-					<param>com.example.attsk.controller.*</param> 
-					<param>com.example.attsk.services.*</param> 
-				</targetClasses> 
-				<excludedTestClasses> 
+			<plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.9</version>
+                <executions>
+                    <execution>
+                        <id>pit-report</id>
+                        <!-- optional, this example attached the goal into mvn test phase -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <!-- https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin -->
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>0.12</version>
+                    </dependency>
+
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+						<param>com.example.attsk.controller.*</param> 
+						<param>com.example.attsk.services.*</param> 
+					</targetClasses> 
+				<excludedTestClasses>
 					<param>com.example.attsk.services.**/*IT.java</param> 
 					<param>com.example.attsk.controller.**/*IT.java</param> 
 					<param>com.example.attsk.**/*IT.java</param> 
@@ -248,15 +249,15 @@
 				<targetTests> 
 					<param>com.example.attsk.*</param> 
 					<param>com.example.attsk.services.*</param> 
-				</targetTests> 
-				<mutators> 
-					<mutator>DEFAULTS</mutator> 
-				</mutators> 
-				<mutationThreshold>80</mutationThreshold> 
-				<outputFormats> 
-					<outputFormat>XML</outputFormat> 
-					<outputFormat>HTML</outputFormat> 
-				</outputFormats> 
+				 </targetTests>
+                    <mutators>
+                        <mutator>DEFAULTS</mutator>
+                    </mutators>
+                    <mutationThreshold>70</mutationThreshold>
+                    <outputFormats>
+                        <outputFormat>XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                    </outputFormats>
 			</configuration> 
 			</plugin>
 		</plugins>
