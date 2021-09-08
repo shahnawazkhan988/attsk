@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class AttskApplicationTests {
+public class AttskApplicationTestsIT {
 
 	@Test
 	public void contextLoads() {
