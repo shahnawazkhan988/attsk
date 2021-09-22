@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import org.springframework.http.*;
 
- class TestCustomEntityExceptionHandler {
+ class CustomEntityExceptionHandlerTest {
 
 	private final String message = "Hello";
 	DuplicateUserExceptionResponse response = new DuplicateUserExceptionResponse(message);

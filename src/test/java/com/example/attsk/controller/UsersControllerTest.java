@@ -22,13 +22,14 @@ import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.setup.*;
 import org.springframework.validation.*;
 
+import com.example.attsk.exceptions.*;
 import com.example.attsk.model.*;
 import com.example.attsk.service.*;
 import com.fasterxml.jackson.databind.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
-class TestUsersController {
+class UsersControllerTest {
 	public static final Long ID = 1L;
 	public static final String USER_NAME = "userName";
 	public static final String USER_Matricola = "70001";
@@ -53,6 +54,78 @@ class TestUsersController {
 	void setUp() {
 		usersController = new UsersController(usersServiceImpl);
 		mockMvc = MockMvcBuilders.standaloneSetup(usersController).build();
+	}
+	
+	@Test
+	void test_createNewUser() throws NoSuchMethodException {
+		// given
+		UsersDto usersDto = getUsersDto(USER_Matricola);
+		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
+
+		// when
+		ResponseEntity<Object> user1 = usersController.createNewUser(usersDto, bindingResult);
+		System.out.println(user1);
+
+		// then
+		assertNotNull(user1.getBody());
+
+		// assert
+		assertEquals(HttpStatus.CREATED, user1.getStatusCode());
+		assertEquals(usersDto.getClass().getDeclaredMethod("getUserMatricola"),
+				Objects.requireNonNull(user1.getBody()).getClass().getDeclaredMethod("getUserMatricola"));
+		then(usersServiceImpl).should().createNewUser(any(UsersDto.class));
+		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+
+	}
+
+	@Test
+	void test_createNewUserStatusIsOK() throws Exception {
+
+		// given
+		UsersDto usersDto = getUsersDto(USER_Matricola1);
+		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
+
+		// When
+		mockMvc.perform(post("/api/v1/new/users")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(mapper.writeValueAsString(usersDto)))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.userName", equalTo(USER_NAME)))
+				.andExpect(jsonPath("$.userMatricola", equalTo(USER_Matricola1)))
+				.andExpect(jsonPath("$.userPass", equalTo(USER_Pass)))
+				.andExpect(jsonPath("$.userRole", equalTo(USER_Role)));
+	}
+
+	@Test
+	void test_createNewUserStatusIs400() throws Exception {
+		// given
+		UsersDto usersDto = new UsersDto();
+		usersDto.setId(ID);
+		usersDto.setUserName(USER_NAME);
+		usersDto.setUserMatricola("Matr8kkkkkkkkkkk888");
+		usersDto.setUserPass(USER_Pass);
+		usersDto.setUserRole(USER_Role);
+
+		// When
+		mockMvc.perform(post("/api/v1/new/users").contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.userMatricola", Is.is("Please use 4 to 5 characters long")));
+
+	}
+
+	@Test
+	void test_createNewUserStatusIs400withEmptyUser() throws Exception {
+		// given
+		UsersDto usersDto = new UsersDto();
+		usersDto.setId(ID);
+
+		// When
+		mockMvc.perform(post("/api/v1/new/users").contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.userName", Is.is("User Name is required")))
+				.andExpect(jsonPath("$.userMatricola", Is.is("userMatricola is required")))
+				.andExpect(jsonPath("$.userPass", Is.is("User userPass is required")));
+
 	}
 
 	@Test
@@ -124,78 +197,10 @@ class TestUsersController {
 	void test_getUserByIdNotFound() throws Exception {
 		when(usersServiceImpl.getUserById(anyLong())).thenReturn(null);
 		this.mockMvc.perform(get("/api/v1/users/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(content().string("")); // content is empty string
+				.andExpect( content().string("")); // content is empty string
 	}
 
-	@Test
-	void test_createNewUser() throws NoSuchMethodException {
-		// given
-		UsersDto usersDto = getUsersDto(USER_Matricola);
-		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
-
-		// when
-		ResponseEntity<Object> user1 = usersController.createNewUser(usersDto, bindingResult);
-		System.out.println(user1);
-
-		// then
-		assertNotNull(user1.getBody());
-
-		// assert
-		assertEquals(HttpStatus.CREATED, user1.getStatusCode());
-		assertEquals(usersDto.getClass().getDeclaredMethod("getUserMatricola"),
-				Objects.requireNonNull(user1.getBody()).getClass().getDeclaredMethod("getUserMatricola"));
-		then(usersServiceImpl).should().createNewUser(any(UsersDto.class));
-		then(usersServiceImpl).shouldHaveNoMoreInteractions();
-
-	}
-
-	@Test
-	void test_createNewUserStatusIsOK() throws Exception {
-
-		// given
-		UsersDto usersDto = getUsersDto(USER_Matricola1);
-		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
-
-		// When
-		mockMvc.perform(post("/api/v1/users").contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isCreated())
-				.andExpect(jsonPath("$.userName", equalTo(USER_NAME)))
-				.andExpect(jsonPath("$.userMatricola", equalTo(USER_Matricola1)))
-				.andExpect(jsonPath("$.userPass", equalTo(USER_Pass)))
-				.andExpect(jsonPath("$.userRole", equalTo(USER_Role)));
-	}
-
-	@Test
-	void test_createNewUserStatusIs400() throws Exception {
-		// given
-		UsersDto usersDto = new UsersDto();
-		usersDto.setId(ID);
-		usersDto.setUserName(USER_NAME);
-		usersDto.setUserMatricola("Matr8kkkkkkkkkkk888");
-		usersDto.setUserPass(USER_Pass);
-		usersDto.setUserRole(USER_Role);
-
-		// When
-		mockMvc.perform(post("/api/v1/users").contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.userMatricola", Is.is("Please use 4 to 5 characters long")));
-
-	}
-
-	@Test
-	void test_createNewUserStatusIs400withEmptyProject() throws Exception {
-		// given
-		UsersDto usersDto = new UsersDto();
-		usersDto.setId(ID);
-
-		// When
-		mockMvc.perform(post("/api/v1/users").contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(usersDto))).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.userName", Is.is("User Name is required")))
-				.andExpect(jsonPath("$.userMatricola", Is.is("userMatricola is required")))
-				.andExpect(jsonPath("$.userPass", Is.is("User userPass is required")));
-
-	}
+	
 
 	@Test
 	void test_deleteUser() {
@@ -213,6 +218,39 @@ class TestUsersController {
 		// then
 		then(usersServiceImpl).should().deleteUser(any(String.class));
 		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+	}
+	
+	@Test
+	void test_deleteUserStatusOK() throws Exception{
+		// given
+		UsersDto users = new UsersDto();
+		users.setId(ID);
+		users.setUserName(USER_NAME);
+		users.setUserMatricola(USER_Matricola1);
+		users.setUserPass(USER_Pass);
+		users.setUserRole(USER_Role);
+
+		// when
+	        mockMvc.perform(delete("/api/v1/70001")
+	        .contentType(MediaType.APPLICATION_JSON))
+	                .andExpect(status().isOk())
+	                .andExpect(jsonPath("$",equalTo("User with Matricola: 70001 has been deleted successfully")));
+	}
+	
+	@Test
+	void test_deleteUserStatus400() throws Exception{
+		// given
+		UsersDto users = new UsersDto();
+		users.setId(ID);
+		users.setUserName(USER_NAME);
+		users.setUserMatricola(USER_Matricola1);
+		users.setUserPass(USER_Pass);
+		users.setUserRole(USER_Role);
+		 willThrow(DuplicateUserExceptions.class).given(usersServiceImpl).deleteUser(null);
+		 //       when
+       mockMvc.perform(delete("/api/v1/7")
+               .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isBadRequest());
 	}
 
 	private UsersDto getUsersDto(String userMatricola) {

@@ -66,6 +66,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<dependency>
+	      <groupId>io.rest-assured</groupId>
+	      <artifactId>spring-mock-mvc</artifactId>
+	      <scope>test</scope>
+	    </dependency>
 
 		<!-- MapStruct -->
 		<dependency>
@@ -238,22 +243,28 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-						<param>com.example.attsk.controller.*</param> 
-						<param>com.example.attsk.services.*</param> 
+						<param>com.example.attsk.*</param> 
+						<!--<param>com.example.attsk.services.UsersServiceImpl.*</param> 
+						<param>com.example.attsk.controller.UsersController.*</param> -->
 					</targetClasses> 
-				<excludedTestClasses>
-					<param>com.example.attsk.services.**/*IT.java</param> 
-					<param>com.example.attsk.controller.**/*IT.java</param> 
-					<param>com.example.attsk.**/*IT.java</param> 
-				</excludedTestClasses> 
-				<targetTests> 
-					<param>com.example.attsk.*</param> 
-					<param>com.example.attsk.services.*</param> 
-				 </targetTests>
+					<excludedTestClasses>
+						 <!--<excludedTestClass>com.example.attsk.services.**/*IT.java</excludedTestClass> 
+						<excludedTestClass>com.example.attsk.controller.**/*IT.java</excludedTestClass> 
+						<excludedTestClass>com.example.attsk.**/*IT.java</excludedTestClass>  
+						<param>com.example.attsk.**/*IT</param>
+						<param>com.example.attsk.controller.**/*IT</param>-->
+						<!-- <excludedTestClass>**/AttskApplicationTestIT.java</excludedTestClass>
+						<excludedTestClass>**/UsersControllerTestIT.java</excludedTestClass> -->
+						<excludedTestClass>com.example.**.*IT</excludedTestClass>
+					</excludedTestClasses> 
+					<targetTests> 
+						 <param>com.example.*</param>
+						<!-- <param>com.example.attsk.services.*</param>  -->
+					 </targetTests>
                     <mutators>
                         <mutator>DEFAULTS</mutator>
                     </mutators>
-                    <mutationThreshold>70</mutationThreshold>
+                    <mutationThreshold>30</mutationThreshold>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
                         <outputFormat>HTML</outputFormat>

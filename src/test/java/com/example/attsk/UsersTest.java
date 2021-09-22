@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 
 import com.example.attsk.model.*;
 
- class TestUsers {
+ class UsersTest {
 
 	
 	@Test

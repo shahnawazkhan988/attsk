@@ -18,8 +18,9 @@ import com.example.attsk.model.*;
 
 @ExtendWith(MockitoExtension.class)
 //@MockitoSettings(strictness = Strictness.LENIENT)
-class TestUsersServiceImpl {
-
+class UsersServiceImplTest {
+	
+	
 	@Mock
 	private IUsersDao iUsersDao;
 
@@ -104,9 +105,47 @@ class TestUsersServiceImpl {
 		assertEquals(users, usersServiceImpl.createNewUser(users));
 
 	}
+	
+
+	
+//	@Test
+//    void test_addUsers_exception(){
+//		// given
+//		UsersDto users = new UsersDto();
+//		users.setId(1L);
+//		users.setUserName("Shahnawaz");
+//		users.setUserMatricola("70001");
+//		users.setUserPass("123456");
+//		users.setUserRole("ST");
+//		// when
+//			when(usersServiceImpl.createNewUser(users)).thenReturn(null);
+////        Then
+//        assertThrows(DuplicateUserExceptions.class,()->usersServiceImpl.createNewUser(users));
+//    }
+	
+//	@Test
+//	void test_addUsers_exception(){
+//		// given
+//		UsersDto users = new UsersDto();
+//		users.setId(1L);
+//		users.setUserName("Shahnawaz");
+//		users.setUserMatricola("70001");
+//		users.setUserPass("123456");
+//		users.setUserRole("ST");
+//
+//		// when
+//		when(usersServiceImpl.createNewUser(users))
+//
+//				// then
+//				.thenThrow(new RuntimeException("error"));
+//		
+//		// assert
+//		assertEquals( HttpStatus.BAD_REQUEST,   users, usersServiceImpl.createNewUser(users));
+//
+//	}
 
 	@Test
-	void test_deleteUser() {
+	void test_deleteUser() throws Exception{
 		// given
 		UsersDto users = new UsersDto();
 		users.setId(1L);

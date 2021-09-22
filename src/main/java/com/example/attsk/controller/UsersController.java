@@ -40,7 +40,7 @@ public class UsersController {
 	}
 
 
-	@PostMapping(value = "/users", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/new/users", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> createNewUser(@Valid @RequestBody UsersDto users, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
