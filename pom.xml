@@ -242,8 +242,14 @@
 
                 </dependencies>
                 <configuration>
+                	<avoidCallsTo>					    
+					    <avoidCallsTo>org.Slf4j</avoidCallsTo>
+					</avoidCallsTo>
                     <targetClasses>
-						<param>com.example.attsk.*</param> 
+						<!-- <param>com.example.attsk.**</param> --> 
+						<param>com.example.attsk.services.*</param> 
+						<param>com.example.attsk.controller.*</param> 
+						<!--<param>com.example.attsk.*</param> -->
 						<!--<param>com.example.attsk.services.UsersServiceImpl.*</param> 
 						<param>com.example.attsk.controller.UsersController.*</param> -->
 					</targetClasses> 
@@ -255,16 +261,20 @@
 						<param>com.example.attsk.controller.**/*IT</param>-->
 						<!-- <excludedTestClass>**/AttskApplicationTestIT.java</excludedTestClass>
 						<excludedTestClass>**/UsersControllerTestIT.java</excludedTestClass> -->
-						<excludedTestClass>com.example.**.*IT</excludedTestClass>
+						 <!--  <excludedTestClass>com.example.attsk.controller.**.*IT</excludedTestClass>--> 
+						 <excludedTestClass>com.example.attsk.controller.**.*IT</excludedTestClass>		 
+						 <excludedTestClass>com.example.attsk.**.*IT</excludedTestClass>
 					</excludedTestClasses> 
 					<targetTests> 
-						 <param>com.example.*</param>
+						<param>com.example.attsk.services.*</param> 
+						<param>com.example.attsk.controller.*</param> 
+						<!-- <param>com.example.attsk.*</param> -->
 						<!-- <param>com.example.attsk.services.*</param>  -->
 					 </targetTests>
                     <mutators>
                         <mutator>DEFAULTS</mutator>
                     </mutators>
-                    <mutationThreshold>30</mutationThreshold>
+                    <mutationThreshold>80</mutationThreshold>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
                         <outputFormat>HTML</outputFormat>
