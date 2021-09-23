@@ -40,8 +40,9 @@ public class UsersController {
 	}
 
 
-	@PostMapping(value = "/new/users", consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = "/new/users", consumes = "application/json", produces = "application/json", method = RequestMethod.POST)
 	public ResponseEntity<Object> createNewUser(@Valid @RequestBody UsersDto users, BindingResult bindingResult) {
+		
 
 		if (bindingResult.hasErrors()) {
 			log.error("Problem with body content in while create new user");

@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
-public class DuplicateUserExceptionResponseTest 
+class DuplicateUserExceptionResponseTest 
 {
-	public static final String MESSAGE = "there";
+	static final String MESSAGE = "there";
 	
 	@Test
 	void getUserMatricola()
