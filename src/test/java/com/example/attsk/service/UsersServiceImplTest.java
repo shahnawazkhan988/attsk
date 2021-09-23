@@ -14,6 +14,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 
 import com.example.attsk.dao.*;
+import com.example.attsk.exceptions.*;
 import com.example.attsk.model.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -108,42 +109,21 @@ class UsersServiceImplTest {
 	
 
 	
-//	@Test
-//    void test_addUsers_exception(){
-//		// given
-//		UsersDto users = new UsersDto();
-//		users.setId(1L);
-//		users.setUserName("Shahnawaz");
-//		users.setUserMatricola("70001");
-//		users.setUserPass("123456");
-//		users.setUserRole("ST");
-//		// when
-//			when(usersServiceImpl.createNewUser(users)).thenReturn(null);
-////        Then
-//        assertThrows(DuplicateUserExceptions.class,()->usersServiceImpl.createNewUser(users));
-//    }
+	@Test
+    void test_addUsers_exception(){
+		// given
+		UsersDto users = new UsersDto();
+		users.setId(1L);
+		users.setUserName("Shahnawaz");
+		users.setUserMatricola("70001");
+		users.setUserPass("123456");
+		users.setUserRole("ST");
+		// when
+		given(iUsersDao.save(any(UsersDto.class))).willThrow(UserIdExceptions.class);
+//        Then
+        assertThrows(UserIdExceptions.class,()->usersServiceImpl.createNewUser(users));
+    }
 	
-//	@Test
-//	void test_addUsers_exception(){
-//		// given
-//		UsersDto users = new UsersDto();
-//		users.setId(1L);
-//		users.setUserName("Shahnawaz");
-//		users.setUserMatricola("70001");
-//		users.setUserPass("123456");
-//		users.setUserRole("ST");
-//
-//		// when
-//		when(usersServiceImpl.createNewUser(users))
-//
-//				// then
-//				.thenThrow(new RuntimeException("error"));
-//		
-//		// assert
-//		assertEquals( HttpStatus.BAD_REQUEST,   users, usersServiceImpl.createNewUser(users));
-//
-//	}
-
 	@Test
 	void test_deleteUser() throws Exception{
 		// given
