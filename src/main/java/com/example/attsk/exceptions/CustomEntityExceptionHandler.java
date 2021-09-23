@@ -9,9 +9,9 @@ import org.springframework.web.servlet.mvc.method.annotation.*;
 public class CustomEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    @ExceptionHandler(DuplicateUserExceptions.class)
-    protected final ResponseEntity<Object> handleDuplicateUserExp(DuplicateUserExceptions exception){
-        var response = new DuplicateUserExceptionResponse(exception.getMessage());
+    @ExceptionHandler(UserIdExceptions.class)
+    protected final ResponseEntity<Object> handleDuplicateUserExp(UserIdExceptions exception){
+        var response = new UserIdExceptionResponse(exception.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 

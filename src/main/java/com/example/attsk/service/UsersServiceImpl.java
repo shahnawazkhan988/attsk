@@ -38,7 +38,7 @@ public class UsersServiceImpl {
 		catch (Exception exception) 
 		{
 			
-			throw new DuplicateUserExceptions("Matricola number :"+users.getUserMatricola()+" Already Exists");
+			throw new UserIdExceptions("Matricola number :"+users.getUserMatricola()+" Already Exists");
 		}
 		
 	}
@@ -50,7 +50,7 @@ public class UsersServiceImpl {
         if(userDao!=null){
         	userDaoRef.delete(userDao);
         }else {
-            throw new DuplicateUserExceptions("User with matricola :"+matricola+" does not Exists");
+            throw new UserIdExceptions("User with matricola :"+matricola+" does not Exists");
         }
 	}
 	

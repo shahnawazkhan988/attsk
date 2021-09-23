@@ -246,7 +246,7 @@ class UsersControllerTest {
 		users.setUserMatricola(USER_Matricola1);
 		users.setUserPass(USER_Pass);
 		users.setUserRole(USER_Role);
-		 willThrow(DuplicateUserExceptions.class).given(usersServiceImpl).deleteUser(null);
+		 willThrow(UserIdExceptions.class).given(usersServiceImpl).deleteUser(null);
 		 //       when
        mockMvc.perform(delete("/api/v1/7")
                .contentType(MediaType.APPLICATION_JSON))

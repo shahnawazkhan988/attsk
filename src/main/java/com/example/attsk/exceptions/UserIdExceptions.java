@@ -4,9 +4,9 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class DuplicateUserExceptions extends RuntimeException {
+public class UserIdExceptions extends RuntimeException {
 	
-	public DuplicateUserExceptions(String message) 
+	public UserIdExceptions(String message) 
 	{
 		super(message);
 	}

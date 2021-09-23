@@ -24,6 +24,8 @@ class UsersControllerTestIT
 {
 	@Autowired
 	UsersServiceImpl usersServiceImpl;
+	
+	IUsersService iUsersService;
 	@Autowired
 	private IUsersDao iUsersDao;
 	
@@ -92,5 +94,25 @@ class UsersControllerTestIT
 
 	}
 	
+	@Test
+	void test_deleteUser() throws Exception {
+
+		// given
+
+		List<UsersDto> users = new ArrayList<UsersDto>();
+		UsersDto user = new UsersDto();
+		user.setId(1L);
+		user.setUserName("Shahnawaz");
+		user.setUserMatricola("70001");
+		user.setUserPass("123456");
+		user.setUserRole("ST");
+
+		users.add(user);
+
+		// when
+		when().
+		delete("/api/v1/70001");
+
+	}
 	
 }

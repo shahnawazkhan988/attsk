@@ -8,7 +8,7 @@ import org.springframework.http.*;
  class CustomEntityExceptionHandlerTest {
 
 	private final String message = "Hello";
-	DuplicateUserExceptionResponse response = new DuplicateUserExceptionResponse(message);
+	UserIdExceptionResponse response = new UserIdExceptionResponse(message);
 
 	CustomEntityExceptionHandler customEntityExceptionHandler = new CustomEntityExceptionHandler();
 
@@ -16,7 +16,7 @@ import org.springframework.http.*;
 	void handleDuplicateUserExp() throws NoSuchFieldException, NoSuchMethodException {
 		//When
 		ResponseEntity<Object> responseEntity = customEntityExceptionHandler
-				.handleDuplicateUserExp(new DuplicateUserExceptions(message));
+				.handleDuplicateUserExp(new UserIdExceptions(message));
 
 		//Then
 		assertNotNull(responseEntity.getBody());

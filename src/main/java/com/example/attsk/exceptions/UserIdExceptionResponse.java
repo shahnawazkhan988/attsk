@@ -2,11 +2,11 @@ package com.example.attsk.exceptions;
 
 
 
-public class DuplicateUserExceptionResponse {
+public class UserIdExceptionResponse {
 
     private final String userMatricola;
 
-    public DuplicateUserExceptionResponse(String userMatricola) {
+    public UserIdExceptionResponse(String userMatricola) {
         this.userMatricola = userMatricola;
     }
 
