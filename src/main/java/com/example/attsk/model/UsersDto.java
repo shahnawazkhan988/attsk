@@ -4,9 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import lombok.*;
-
-@Entity
 @Data
+@Entity
 public class UsersDto 
 {
 	@Id
