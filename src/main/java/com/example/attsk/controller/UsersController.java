@@ -40,7 +40,7 @@ public class UsersController {
 	}
 
 
-	@RequestMapping(value = "/new/users", consumes = "application/json", produces = "application/json", method = RequestMethod.POST)
+	@PostMapping(value = "/new/users", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> createNewUser(@Valid @RequestBody UsersDto users, BindingResult bindingResult) {
 		
 
