@@ -24,6 +24,13 @@
 		<sonar.organization>shahnawazkhan988</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		
+		<sonar.coverage.exclusions>
+            
+            **/AttskApplication.*,
+            **/models/*.*,
+            
+        </sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -95,26 +102,7 @@
 						</exclude>
 					</excludes>
 				</configuration>
-			</plugin>
-			   <!--  <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-test-source</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/it/java</source>
-
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
+			</plugin>			  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -194,7 +182,6 @@
 				<version>0.8.6</version>
 				<configuration>
 					<excludes>
-
 						<exclude>**/AttskApplication.*</exclude>
 					</excludes>
 				</configuration>
@@ -241,36 +228,22 @@
                     </dependency>
 
                 </dependencies>
-                <configuration>
-                	<avoidCallsTo>					    
-					    <avoidCallsTo>org.Slf4j</avoidCallsTo>
-					</avoidCallsTo>
+                <configuration>                	
                     <targetClasses>
-						<!-- <param>com.example.attsk.**</param> --> 
 						<param>com.example.attsk.services.*</param> 
 						<param>com.example.attsk.controller.*</param> 
-						<!--<param>com.example.attsk.*</param> -->
-						<!--<param>com.example.attsk.services.UsersServiceImpl.*</param> 
-						<param>com.example.attsk.controller.UsersController.*</param> -->
 					</targetClasses> 
-					<excludedTestClasses>
-						 <!--<excludedTestClass>com.example.attsk.services.**/*IT.java</excludedTestClass> 
-						<excludedTestClass>com.example.attsk.controller.**/*IT.java</excludedTestClass> 
-						<excludedTestClass>com.example.attsk.**/*IT.java</excludedTestClass>  
-						<param>com.example.attsk.**/*IT</param>
-						<param>com.example.attsk.controller.**/*IT</param>-->
-						<!-- <excludedTestClass>**/AttskApplicationTestIT.java</excludedTestClass>
-						<excludedTestClass>**/UsersControllerTestIT.java</excludedTestClass> -->
-						 <!--  <excludedTestClass>com.example.attsk.controller.**.*IT</excludedTestClass>--> 
-						 <excludedTestClass>com.example.attsk.controller.**.*IT</excludedTestClass>		 
-						 <excludedTestClass>com.example.attsk.**.*IT</excludedTestClass>
-					</excludedTestClasses> 
 					<targetTests> 
 						<param>com.example.attsk.services.*</param> 
-						<param>com.example.attsk.controller.*</param> 
-						<!-- <param>com.example.attsk.*</param> -->
-						<!-- <param>com.example.attsk.services.*</param>  -->
+						<param>com.example.attsk.controller.*</param>
 					 </targetTests>
+					 <excludedTestClasses>
+						<param>com.example.attsk.**/*IT</param>
+						<param>com.example.attsk.controller.**/*IT</param>
+					</excludedTestClasses>					
+					 <avoidCallsTo>					    
+					    <avoidCallsTo>org.slf4j</avoidCallsTo>
+					</avoidCallsTo>
                     <mutators>
                         <mutator>DEFAULTS</mutator>
                     </mutators>

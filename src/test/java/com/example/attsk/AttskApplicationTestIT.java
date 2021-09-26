@@ -14,8 +14,8 @@ class AttskApplicationTestIT {
 	}
 
 	// Test class added ONLY to cover main() invocation not covered by application tests.
-//	@Test
-//	public void main() {
+//	@Test	
+//	void main() {
 //		AttskApplication.main(new String[] {});
 //	   }
 }
