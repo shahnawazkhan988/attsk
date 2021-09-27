@@ -71,23 +71,13 @@ class UsersControllerTestIT
 
 		List<UsersDto> users = new ArrayList<UsersDto>();
 		UsersDto user = new UsersDto();
-		UsersDto user1 = new UsersDto();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
-
-		user1.setId(2L);
-		user1.setUserName("User2");
-		user1.setUserMatricola("70002");
-		user1.setUserPass("123456");
-		user1.setUserRole("ST");
-
-		users.add(user);
-		users.add(user1);
 		
-		List<UsersDto> allUsers = List.of(user, user1);
+		List<UsersDto> allUsers = List.of(user);
 		
 		iUsersDao.saveAll(allUsers);
 		// when
@@ -95,7 +85,7 @@ class UsersControllerTestIT
 		get("/api/v1/users");
 		
 		//assertThat(iUsersDao.findAll());
-		assertEquals(2, iUsersDao.findAll().size());
+		assertEquals(1, iUsersDao.findAll().size());
 
 	}
 	
