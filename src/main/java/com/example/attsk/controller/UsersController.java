@@ -14,8 +14,8 @@ import com.example.attsk.service.*;
 
 import lombok.extern.slf4j.*;
 
-@RestController
 @Slf4j
+@RestController
 @RequestMapping("/api/v1/")
 public class UsersController {
 
