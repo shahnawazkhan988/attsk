@@ -102,11 +102,19 @@ class UsersControllerTestIT
 		user.setUserPass("123456");
 		user.setUserRole("ST");
 
-		users.add(user);
+		List<UsersDto> allUsers = List.of(user);
+		
+		iUsersDao.saveAll(allUsers);
 
 		// when
 		when().
 		delete("/api/v1/70001");
+		
+		//var userDao = iUsersDao.findByuserMatricola("70001");
+		
+		//usersServiceImpl.deleteUser("70001");
+		
+		assertEquals(0, iUsersDao.findAll().size());
 
 	}
 	
