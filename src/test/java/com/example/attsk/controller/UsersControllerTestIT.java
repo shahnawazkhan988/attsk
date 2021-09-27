@@ -68,8 +68,6 @@ class UsersControllerTestIT
 	void test_getAllUsers() throws Exception {
 
 		// given
-
-		List<UsersDto> users = new ArrayList<UsersDto>();
 		UsersDto user = new UsersDto();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
@@ -93,8 +91,6 @@ class UsersControllerTestIT
 	void test_deleteUser() throws Exception {
 
 		// given
-
-		List<UsersDto> users = new ArrayList<UsersDto>();
 		UsersDto user = new UsersDto();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
@@ -109,11 +105,7 @@ class UsersControllerTestIT
 		// when
 		when().
 		delete("/api/v1/70001");
-		
-		//var userDao = iUsersDao.findByuserMatricola("70001");
-		
-		//usersServiceImpl.deleteUser("70001");
-		
+				
 		assertEquals(0, iUsersDao.findAll().size());
 
 	}
