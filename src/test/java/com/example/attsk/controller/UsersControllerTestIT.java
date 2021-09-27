@@ -3,6 +3,7 @@ package com.example.attsk.controller;
 
 import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.*;
 
@@ -85,12 +86,16 @@ class UsersControllerTestIT
 
 		users.add(user);
 		users.add(user1);
-
+		
+		List<UsersDto> allUsers = List.of(user, user1);
+		
+		iUsersDao.saveAll(allUsers);
 		// when
 		when().
 		get("/api/v1/users");
 		
-		assertThat(iUsersDao.findAll());
+		//assertThat(iUsersDao.findAll());
+		assertEquals(2, iUsersDao.findAll().size());
 
 	}
 	

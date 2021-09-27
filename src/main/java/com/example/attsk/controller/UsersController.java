@@ -19,6 +19,12 @@ import lombok.extern.slf4j.*;
 @RequestMapping("/api/v1/")
 public class UsersController {
 
+//private IUsersService iUsersService;
+//	
+//	public UsersController(IUsersService iUsersService) {
+//		
+//		this.iUsersService = iUsersService;
+//	}
 	// add IUsersService
 	@Autowired
 	UsersServiceImpl usersServiceRef;
