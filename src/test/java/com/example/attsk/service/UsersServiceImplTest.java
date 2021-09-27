@@ -144,5 +144,17 @@ class UsersServiceImplTest {
 		// verify
 		verify(iUsersDao, times(1)).delete(users);
 	}
+	
+	@Test
+    void test_deleteUserThrowsProIdExp(){
+        //        given
+		UsersDto users = new UsersDto();
+		users.setId(1L);
+		users.setUserMatricola("70001");
+       given(iUsersDao.findByuserMatricola(any())).willReturn(nullable(UsersDto.class));
+
+//        then
+        assertThrows(UserIdExceptions.class,()->usersServiceImpl.deleteUser("70001"));
+    }
 
 }
