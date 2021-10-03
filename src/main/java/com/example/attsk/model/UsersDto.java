@@ -5,7 +5,9 @@ import javax.validation.constraints.*;
 
 import lombok.*;
 @Data
-@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UsersDto 
 {
 	@Id

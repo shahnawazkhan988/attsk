@@ -28,7 +28,6 @@ import com.example.attsk.service.*;
 import com.fasterxml.jackson.databind.*;
 
 @ExtendWith(MockitoExtension.class)
-//@MockitoSettings(strictness = Strictness.LENIENT)
 class UsersControllerTest {
 	public static final Long ID = 1L;
 	public static final String USER_NAME = "userName";

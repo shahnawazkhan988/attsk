@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.attsk.model.*;
 import com.example.attsk.service.*;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.*;
 
 @Slf4j
@@ -20,8 +21,7 @@ import lombok.extern.slf4j.*;
 public class UsersController {
 
 	// add IUsersService
-	@Autowired
-	UsersServiceImpl usersServiceRef;
+	private final UsersServiceImpl usersServiceRef;
 
 	public UsersController(UsersServiceImpl usersServiceImpl) {
 		

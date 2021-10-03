@@ -23,14 +23,12 @@
 		<sonar.projectKey>shahnawazkhan988_attsk</sonar.projectKey>
 		<sonar.organization>shahnawazkhan988</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-
 		<sonar.coverage.exclusions>
-
 			**/AttskApplication.*,
 			**/models/*.*,
-
+			**/entities/*.*,
 		</sonar.coverage.exclusions>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>		
 	</properties>
 	<dependencies>
 		<dependency>
@@ -182,6 +180,7 @@
 				<version>0.8.6</version>
 				<configuration>
 					<excludes>
+						<exclude>**/entities/*.*</exclude>
 						<exclude>**/AttskApplication.*</exclude>
 					</excludes>
 				</configuration>
@@ -232,10 +231,12 @@
 					<targetClasses>
 						<param>com.example.attsk.services.*</param>
 						<param>com.example.attsk.controller.*</param>
+						<param>com.example.attsk.mapper.*</param>
 					</targetClasses>
 					<targetTests>
 						<param>com.example.attsk.services.*</param>
 						<param>com.example.attsk.controller.*</param>
+						<param>com.example.attsk.mapper.*</param>
 					</targetTests>
 					<excludedTestClasses>
 						<param>com.example.attsk.**/*IT</param>

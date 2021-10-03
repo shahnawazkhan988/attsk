@@ -14,6 +14,7 @@ import org.springframework.boot.web.server.*;
 import org.springframework.http.*;
 
 import com.example.attsk.dao.*;
+import com.example.attsk.entities.Users;
 import com.example.attsk.model.*;
 import com.example.attsk.service.*;
 
@@ -26,7 +27,6 @@ class UsersControllerTestIT
 	@Autowired
 	UsersServiceImpl usersServiceImpl;
 	
-	IUsersService iUsersService;
 	@Autowired
 	private IUsersDao iUsersDao;
 	
@@ -43,7 +43,7 @@ class UsersControllerTestIT
 	@Test
 	void test_createNewUser() throws Exception
 	{
-		UsersDto user = new UsersDto();
+		Users user = new Users();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
@@ -56,7 +56,7 @@ class UsersControllerTestIT
 			when().
 				post("/api/v1/new/users");
 
-			UsersDto saved = response.getBody().as(UsersDto.class);
+		Users saved = response.getBody().as(Users.class);
 
 			// read it back from the repository
 			assertThat(iUsersDao.findById(saved.getId()))
@@ -68,14 +68,14 @@ class UsersControllerTestIT
 	void test_getAllUsers() throws Exception {
 
 		// given
-		UsersDto user = new UsersDto();
+		Users user = new Users();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
 		
-		List<UsersDto> allUsers = List.of(user);
+		List<Users> allUsers = List.of(user);
 		
 		iUsersDao.saveAll(allUsers);
 		// when
@@ -91,14 +91,14 @@ class UsersControllerTestIT
 	void test_deleteUser() throws Exception {
 
 		// given
-		UsersDto user = new UsersDto();
+		Users user = new Users();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
 
-		List<UsersDto> allUsers = List.of(user);
+		List<Users> allUsers = List.of(user);
 		
 		iUsersDao.saveAll(allUsers);
 

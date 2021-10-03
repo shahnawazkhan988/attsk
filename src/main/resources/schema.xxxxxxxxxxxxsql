@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS usersdto (
-    Id Long AUTO_INCREMENT  PRIMARY KEY,
+    Id bigint NOT NULL PRIMARY KEY,
     userName VARCHAR(256),
     userMatricola VARCHAR(256),
     userPass VARCHAR(256),
