@@ -2,7 +2,6 @@ package com.example.attsk.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import com.example.attsk.dao.*;
@@ -44,8 +43,6 @@ public class UsersServiceImpl {
 			
 			Users savedUsers = userDaoRef.save(detachedUsers);
             return  usersMapper.usersToUsersDto(savedUsers);
-			
-			//return userDaoRef.save(users);
 		} 
 		catch (Exception exception) 
 		{
