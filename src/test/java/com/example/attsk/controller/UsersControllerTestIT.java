@@ -82,7 +82,6 @@ class UsersControllerTestIT
 		when().
 		get("/api/v1/users");
 		
-		//assertThat(iUsersDao.findAll());
 		assertEquals(1, iUsersDao.findAll().size());
 
 	}

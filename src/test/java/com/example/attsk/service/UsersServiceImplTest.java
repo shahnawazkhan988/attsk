@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.util.*;
 
@@ -27,9 +26,6 @@ class UsersServiceImplTest {
 
 	@InjectMocks
 	private UsersServiceImpl usersServiceImpl;
-	
-	@Captor
-	ArgumentCaptor<String> identifierCapture;
 	
 	@Test
 	void test_getAllUsers() { // given
