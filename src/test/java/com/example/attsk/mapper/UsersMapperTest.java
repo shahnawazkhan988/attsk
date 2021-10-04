@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import com.example.attsk.entities.Users;
 import com.example.attsk.model.UsersDto;
 
-public class UsersMapperTest {
+class UsersMapperTest {
 	public static final Long ID = 1L;
 	public static final String USER_NAME = "userName";
 	public static final String USER_Matricola = "70001";
@@ -93,12 +93,12 @@ public class UsersMapperTest {
 		assertNull(usersMapper.toUserDto(null));
 	}
 
-//	@Test
-//	void toUserDtoReturnsEmptyObject() {
-//		users = new List<Users> users;
-//		
-//		assertNotNull(usersMapper.toUserDto( new List<Users> ));
-//	}
+	@Test
+	void toUserDtoReturnsEmptyObject() {
+		List<Users> user =new ArrayList<>(Arrays.asList());
+		
+		assertNotNull(usersMapper.toUserDto( user ));
+	}
 	
 	@Test
 	void toUserDto() {
