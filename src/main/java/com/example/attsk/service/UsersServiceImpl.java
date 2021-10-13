@@ -1,6 +1,7 @@
 package com.example.attsk.service;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.springframework.stereotype.*;
 
@@ -61,6 +62,30 @@ public class UsersServiceImpl {
         }else {
             throw new UserIdExceptions("User with matricola :"+matricola+" does not Exists");
         }
+	}
+
+
+	public UsersDto updateUser(long userId, UsersDto usersDto) {
+		Optional<Users> users = userDaoRef.findById(userId);
+		if(users.isPresent())
+		{
+			var users1 = users.get();
+			if(!(users1.getUserMatricola().equalsIgnoreCase(usersDto.getUserMatricola())))
+			{
+				throw new UserIdExceptions("User matricola is not updatable, Original: "+users1.getUserMatricola()+" Updating: "+usersDto.getUserMatricola());
+			}
+		}
+		else
+		{
+			throw new UserNotFoundException("User with matricola :"+userId+" does not Exists");
+		}
+		
+		var detachedUsers = usersMapper.usersDtoToUsers(usersDto);
+		detachedUsers.setId(userId);
+		detachedUsers.setUserMatricola(detachedUsers.getUserMatricola().toUpperCase());
+        var savedUser = userDaoRef.save(detachedUsers);
+
+        return usersMapper.usersToUsersDto(savedUser);
 	}
 	
 

@@ -28,7 +28,7 @@
 			**/models/*.*,
 			**/entities/*.*,
 		</sonar.coverage.exclusions>
-		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>		
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,6 +56,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -293,5 +294,4 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
 </project>

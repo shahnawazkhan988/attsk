@@ -69,4 +69,17 @@ public class UsersController {
 		}
 	}
 
+	@PutMapping("/users/{userId}")
+	public ResponseEntity<Object> updateUser(@PathVariable Long userId, @RequestBody UsersDto users) {
+		try
+		{
+			log.debug("updating user detail with UserId:"+userId);
+			return new ResponseEntity<>(usersServiceRef.updateUser(userId, users), HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

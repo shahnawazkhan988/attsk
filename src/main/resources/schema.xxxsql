@@ -1,8 +1,0 @@
-DROP TABLE IF EXISTS usersdto;
-CREATE TABLE usersdto (
-    Id INT AUTO_INCREMENT  PRIMARY KEY,
-    userName VARCHAR(256),
-    userMatricola VARCHAR(256),
-    userPass VARCHAR(256),
-    userRole VARCHAR(256)
-);

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import org.springframework.http.*;
 
+
  class CustomEntityExceptionHandlerTest {
 
 	private final String message = "Hello";
@@ -13,10 +14,10 @@ import org.springframework.http.*;
 	CustomEntityExceptionHandler customEntityExceptionHandler = new CustomEntityExceptionHandler();
 
 	@Test
-	void handleDuplicateUserExp() throws NoSuchFieldException, NoSuchMethodException {
+	void handleUserIdExceptions() throws NoSuchFieldException, NoSuchMethodException {
 		//When
 		ResponseEntity<Object> responseEntity = customEntityExceptionHandler
-				.handleDuplicateUserExp(new UserIdExceptions(message));
+				.handleUserIdExceptions(new UserIdExceptions(message));
 
 		//Then
 		assertNotNull(responseEntity.getBody());
@@ -26,5 +27,17 @@ import org.springframework.http.*;
 		assertEquals(response.getClass().getDeclaredMethod("getUserMatricola"),
 				responseEntity.getBody().getClass().getDeclaredMethod("getUserMatricola"));
 	}
+	
+	@Test
+    void handleUserNotFoundException(){
+//        When
+        ResponseEntity<Object> responseEntity = customEntityExceptionHandler.handleUserNotFoundException(new UserNotFoundException(message));
+//         Then
+        assertNotNull(responseEntity.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+
+    }
+	
+	
 
 }

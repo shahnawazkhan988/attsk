@@ -1,9 +1,12 @@
 package com.example.attsk.controller;
 
-
 import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 
 import java.util.*;
 
@@ -22,14 +25,13 @@ import io.restassured.*;
 import io.restassured.response.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UsersControllerTestIT 
-{
+class UsersControllerTestIT {
 	@Autowired
 	UsersServiceImpl usersServiceImpl;
-	
+
 	@Autowired
 	private IUsersDao iUsersDao;
-	
+
 	@LocalServerPort
 	private int port;
 
@@ -40,30 +42,26 @@ class UsersControllerTestIT
 		iUsersDao.deleteAll();
 		iUsersDao.flush();
 	}
+
 	@Test
-	void test_createNewUser() throws Exception
-	{
+	void test_createNewUser() throws Exception {
 		Users user = new Users();
 		user.setId(1L);
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
-		
-		Response response = given().
-				contentType(MediaType.APPLICATION_JSON_VALUE).
-				body(user).
-			when().
-				post("/api/v1/new/users");
+
+		Response response = given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when()
+				.post("/api/v1/new/users");
 
 		Users saved = response.getBody().as(Users.class);
 
-			// read it back from the repository
-			assertThat(iUsersDao.findById(saved.getId()))
-				.contains(saved);
-		
+		// read it back from the repository
+		assertThat(iUsersDao.findById(saved.getId())).contains(saved);
+
 	}
-	
+
 	@Test
 	void test_getAllUsers() throws Exception {
 
@@ -74,18 +72,17 @@ class UsersControllerTestIT
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
 		user.setUserRole("ST");
-		
+
 		List<Users> allUsers = List.of(user);
-		
+
 		iUsersDao.saveAll(allUsers);
 		// when
-		when().
-		get("/api/v1/users");
-		
+		when().get("/api/v1/users");
+
 		assertEquals(1, iUsersDao.findAll().size());
 
 	}
-	
+
 	@Test
 	void test_deleteUser() throws Exception {
 
@@ -98,15 +95,30 @@ class UsersControllerTestIT
 		user.setUserRole("ST");
 
 		List<Users> allUsers = List.of(user);
-		
+
 		iUsersDao.saveAll(allUsers);
 
 		// when
-		when().
-		delete("/api/v1/70001");
-				
+		when().delete("/api/v1/70001");
+
 		assertEquals(0, iUsersDao.findAll().size());
 
 	}
-	
+
+	@Test
+	void test_UserUpdate() {
+		Users user = new Users();
+		user.setId(1L);
+		user.setUserName("Shahnawaz");
+		user.setUserMatricola("70001");
+		user.setUserPass("123456");
+		user.setUserRole("ST");
+
+		iUsersDao.saveAll(List.of(user));
+		
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when().put("/api/v1/users/" + user.getId())
+				.then().statusCode(200).body("id", equalTo(user.getId().intValue()), "userName",
+						equalTo("Shahnawaz"));
+	}
+
 }

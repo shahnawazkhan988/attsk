@@ -251,6 +251,74 @@ class UsersControllerTest {
                .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isBadRequest());
 	}
+	
+	@Test
+	void test_UserUpdate()
+	{
+		//given
+		UsersDto users = new UsersDto();
+		users.setUserPass(USER_Pass);
+		users.setId(ID);
+		
+		UsersDto returnUsers = new UsersDto();
+		returnUsers.setId(users.getId());
+		returnUsers.setUserPass(users.getUserPass());
+		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
+		
+		//when
+		var responeEntity = usersController.updateUser(ID, users);
+		
+		assertEquals(HttpStatus.OK, responeEntity.getStatusCode());
+	}
+	
+	@Test
+	void test_UserUpdateStatusIsOk() throws Exception
+	{
+		//given
+		UsersDto users = new UsersDto();
+		users.setUserPass(USER_Pass);
+		users.setId(ID);
+		
+		UsersDto returnUsers = new UsersDto();
+		returnUsers.setId(users.getId());
+		returnUsers.setUserPass(users.getUserPass());
+		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
+		
+		//then
+		mockMvc.perform(put("/api/v1/users/1/")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(users)))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.userPass", equalTo(USER_Pass)));
+		then(usersServiceImpl).should().updateUser(anyLong(), any(UsersDto.class));
+		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+	}
+	
+	@Test
+	void test_UserUpdateStatusIs400() throws Exception
+	{
+		//given
+		UsersDto users = new UsersDto();
+		users.setUserPass(USER_Pass);
+		users.setId(ID);
+		
+		//then
+		mockMvc.perform(put("/api/v1/users/yyyyyyyyyyyyyyy/")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(users)))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	void test_UserUpdateStatus400WhenProjectNotFound()
+	{
+		//given		
+		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willThrow(UserNotFoundException.class);
+		//when
+		var response= usersController.updateUser(ID,new UsersDto());
+		//Then
+		assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+	}
 
 	private UsersDto getUsersDto(String userMatricola) {
 		UsersDto usersDto = new UsersDto();
