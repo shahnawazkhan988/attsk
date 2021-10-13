@@ -45,7 +45,8 @@ class UsersControllerTestIT {
 		user.setUserName("Shahnawaz");
 		user.setUserMatricola("70001");
 		user.setUserPass("123456");
-		user.setUserRole("ST");
+		user.setUserRole("ST");	
+		
 
 		Response response = given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when()
 				.post("/api/v1/new/users");
@@ -100,20 +101,27 @@ class UsersControllerTestIT {
 
 	}
 
-//	@Test
-//	void test_UserUpdate() {
-//		Users user = new Users();
-//		user.setId(1L);
-//		user.setUserName("Shahnawaz");
-//		user.setUserMatricola("70001");
-//		user.setUserPass("123456");
-//		user.setUserRole("ST");
-//
-//		iUsersDao.saveAll(List.of(user));
-//		
-//		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when().put("/api/v1/users/" + user.getId())
-//				.then().statusCode(200).body("id", equalTo(user.getId().intValue()), "userName",
-//						equalTo("Shahnawaz"));
-//	}
+	@Test
+	void test_UserUpdate() {
+		Users user = new Users();
+		user.setId(1L);
+		user.setUserName("Shahnawaz");
+		user.setUserMatricola("70001");
+		user.setUserPass("123456");
+		user.setUserRole("ST");
+
+		iUsersDao.saveAll(List.of(user));
+		
+		Users user2 = new Users();
+		user2.setId(1L);
+		user2.setUserName("User2");
+		user2.setUserMatricola("70001");
+		user2.setUserPass("123456");
+		user2.setUserRole("ST");
+		
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user2).when().put("/api/v1/users/" + user.getId())
+				.then().statusCode(200).body("id", equalTo(user.getId().intValue()), "userName",
+						equalTo("User2"));
+	}
 
 }

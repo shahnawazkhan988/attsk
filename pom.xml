@@ -234,15 +234,15 @@
 						<param>com.example.attsk.controller.*</param>
 						<param>com.example.attsk.mapper.*</param>
 					</targetClasses>
+					<excludedTestClasses>
+						<param>com.example.attsk.**.*IT</param>
+						<param>com.example.attsk.controller.**.*IT</param>
+					</excludedTestClasses>
 					<targetTests>
 						<param>com.example.attsk.services.*</param>
 						<param>com.example.attsk.controller.*</param>
 						<param>com.example.attsk.mapper.*</param>
-					</targetTests>
-					<excludedTestClasses>
-						<param>com.example.attsk.**/*IT</param>
-						<param>com.example.attsk.controller.**/*IT</param>
-					</excludedTestClasses>
+					</targetTests>					
 					<avoidCallsTo>
 						<avoidCallsTo>java.util.logging</avoidCallsTo>
 						<avoidCallsTo>org.apache.log4j</avoidCallsTo>

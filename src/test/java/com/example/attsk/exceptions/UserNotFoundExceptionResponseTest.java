@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class UserNotFoundExceptionResponseTest 
+class UserNotFoundExceptionResponseTest 
 {
 	@Test
 	void getMessage()
