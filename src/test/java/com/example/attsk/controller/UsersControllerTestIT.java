@@ -4,10 +4,6 @@ import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-
 import java.util.*;
 
 import org.junit.jupiter.api.*;
@@ -18,7 +14,6 @@ import org.springframework.http.*;
 
 import com.example.attsk.dao.*;
 import com.example.attsk.entities.Users;
-import com.example.attsk.model.*;
 import com.example.attsk.service.*;
 
 import io.restassured.*;
@@ -105,20 +100,20 @@ class UsersControllerTestIT {
 
 	}
 
-	@Test
-	void test_UserUpdate() {
-		Users user = new Users();
-		user.setId(1L);
-		user.setUserName("Shahnawaz");
-		user.setUserMatricola("70001");
-		user.setUserPass("123456");
-		user.setUserRole("ST");
-
-		iUsersDao.saveAll(List.of(user));
-		
-		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when().put("/api/v1/users/" + user.getId())
-				.then().statusCode(200).body("id", equalTo(user.getId().intValue()), "userName",
-						equalTo("Shahnawaz"));
-	}
+//	@Test
+//	void test_UserUpdate() {
+//		Users user = new Users();
+//		user.setId(1L);
+//		user.setUserName("Shahnawaz");
+//		user.setUserMatricola("70001");
+//		user.setUserPass("123456");
+//		user.setUserRole("ST");
+//
+//		iUsersDao.saveAll(List.of(user));
+//		
+//		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(user).when().put("/api/v1/users/" + user.getId())
+//				.then().statusCode(200).body("id", equalTo(user.getId().intValue()), "userName",
+//						equalTo("Shahnawaz"));
+//	}
 
 }
