@@ -20,3 +20,5 @@ GitHub Actions: [![Java CI with Maven](https://github.com/shahnawazkhan988/attsk
   <li>TDD</li>
 </ul>
 <p>if you want to use your MySQL server on docker then use the following instructions: 1: get mysql image from docker hub using :docker pull mysql/mysql:latest 2: connect to it from any of your sqlWorkBench using: docker container run --name attsk -p 2346:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=attskdb -d mysql.</p>
+
+With Maven build and run command: first build using mvn clean install then go target floder and run command through terminal java -jar attsk-0.0.1-SNAPSHOT.jar
