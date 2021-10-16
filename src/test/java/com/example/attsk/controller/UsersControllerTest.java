@@ -39,7 +39,7 @@ class UsersControllerTest {
 //	private UsersController usersController;
 	UsersController usersController;
 	@Mock
-	private UsersServiceImpl usersServiceImpl;
+	private IUsersService usersService;
 
 	@Mock
 	BindingResult bindingResult;
@@ -50,7 +50,7 @@ class UsersControllerTest {
 
 	@BeforeEach
 	void setUp() {
-		usersController = new UsersController(usersServiceImpl);
+		usersController = new UsersController(usersService);
 		mockMvc = MockMvcBuilders.standaloneSetup(usersController).build();
 	}
 	
@@ -58,7 +58,7 @@ class UsersControllerTest {
 	void test_createNewUser() throws NoSuchMethodException {
 		// given
 		UsersDto usersDto = getUsersDto(USER_Matricola);
-		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
+		given(usersService.createNewUser(any(UsersDto.class))).willReturn(usersDto);
 
 		// when
 		ResponseEntity<Object> user1 = usersController.createNewUser(usersDto, bindingResult);
@@ -71,8 +71,8 @@ class UsersControllerTest {
 		assertEquals(HttpStatus.CREATED, user1.getStatusCode());
 		assertEquals(usersDto.getClass().getDeclaredMethod("getUserMatricola"),
 				Objects.requireNonNull(user1.getBody()).getClass().getDeclaredMethod("getUserMatricola"));
-		then(usersServiceImpl).should().createNewUser(any(UsersDto.class));
-		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+		then(usersService).should().createNewUser(any(UsersDto.class));
+		then(usersService).shouldHaveNoMoreInteractions();
 
 	}
 
@@ -81,7 +81,7 @@ class UsersControllerTest {
 
 		// given
 		UsersDto usersDto = getUsersDto(USER_Matricola1);
-		given(usersServiceImpl.createNewUser(any(UsersDto.class))).willReturn(usersDto);
+		given(usersService.createNewUser(any(UsersDto.class))).willReturn(usersDto);
 
 		// When
 		mockMvc.perform(post("/api/v1/new/users")
@@ -150,7 +150,7 @@ class UsersControllerTest {
 		users.add(user1);
 
 		// when
-		when(usersServiceImpl.getAllUsers())
+		when(usersService.getAllUsers())
 
 				// then
 				.thenReturn(users);
@@ -175,7 +175,7 @@ class UsersControllerTest {
 		user.setUserRole("ST");
 
 		// when
-		when(usersServiceImpl.getUserById(anyLong()))
+		when(usersService.getUserById(anyLong()))
 
 				// then
 				.thenReturn(user);
@@ -193,7 +193,7 @@ class UsersControllerTest {
 
 	@Test
 	void test_getUserByIdNotFound() throws Exception {
-		when(usersServiceImpl.getUserById(anyLong())).thenReturn(null);
+		when(usersService.getUserById(anyLong())).thenReturn(null);
 		this.mockMvc.perform(get("/api/v1/users/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect( content().string("")); // content is empty string
 	}
@@ -214,8 +214,8 @@ class UsersControllerTest {
 		usersController.deleteUser(users.getUserMatricola());
 
 		// then
-		then(usersServiceImpl).should().deleteUser(any(String.class));
-		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+		then(usersService).should().deleteUser(any(String.class));
+		then(usersService).shouldHaveNoMoreInteractions();
 	}
 	
 	@Test
@@ -244,7 +244,7 @@ class UsersControllerTest {
 		users.setUserMatricola(USER_Matricola1);
 		users.setUserPass(USER_Pass);
 		users.setUserRole(USER_Role);
-		 willThrow(UserIdExceptions.class).given(usersServiceImpl).deleteUser(null);
+		 willThrow(UserIdExceptions.class).given(usersService).deleteUser(null);
 		 //       when
        mockMvc.perform(delete("/api/v1/7")
                .contentType(MediaType.APPLICATION_JSON))
@@ -262,7 +262,7 @@ class UsersControllerTest {
 		UsersDto returnUsers = new UsersDto();
 		returnUsers.setId(users.getId());
 		returnUsers.setUserPass(users.getUserPass());
-		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
+		given(usersService.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
 		
 		//when
 		var responeEntity = usersController.updateUser(ID, users);
@@ -281,7 +281,7 @@ class UsersControllerTest {
 		UsersDto returnUsers = new UsersDto();
 		returnUsers.setId(users.getId());
 		returnUsers.setUserPass(users.getUserPass());
-		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
+		given(usersService.updateUser(anyLong(), any(UsersDto.class))).willReturn(returnUsers);
 		
 		//then
 		mockMvc.perform(put("/api/v1/users/1/")
@@ -289,8 +289,8 @@ class UsersControllerTest {
 				.content(mapper.writeValueAsString(users)))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.userPass", equalTo(USER_Pass)));
-		then(usersServiceImpl).should().updateUser(anyLong(), any(UsersDto.class));
-		then(usersServiceImpl).shouldHaveNoMoreInteractions();
+		then(usersService).should().updateUser(anyLong(), any(UsersDto.class));
+		then(usersService).shouldHaveNoMoreInteractions();
 	}
 	
 	@Test
@@ -312,7 +312,7 @@ class UsersControllerTest {
 	void test_UserUpdateStatus400WhenProjectNotFound()
 	{
 		//given		
-		given(usersServiceImpl.updateUser(anyLong(), any(UsersDto.class))).willThrow(UserNotFoundException.class);
+		given(usersService.updateUser(anyLong(), any(UsersDto.class))).willThrow(UserNotFoundException.class);
 		//when
 		var response= usersController.updateUser(ID,new UsersDto());
 		//Then

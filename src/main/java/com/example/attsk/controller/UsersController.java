@@ -21,11 +21,11 @@ import lombok.extern.slf4j.*;
 public class UsersController {
 
 	// add IUsersService
-	private final UsersServiceImpl usersServiceRef;
+	private final IUsersService usersServiceRef;
 
-	public UsersController(UsersServiceImpl usersServiceImpl) {
+	public UsersController(IUsersService usersService) {
 		
-		this.usersServiceRef = usersServiceImpl;
+		this.usersServiceRef = usersService;
 	}
 
 	@GetMapping("/users")

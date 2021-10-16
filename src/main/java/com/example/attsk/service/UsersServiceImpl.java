@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class UsersServiceImpl {
+public class UsersServiceImpl implements IUsersService {
 	
 	//@Autowired
 	private final IUsersDao userDaoRef;

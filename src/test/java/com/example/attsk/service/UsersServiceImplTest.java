@@ -23,9 +23,14 @@ class UsersServiceImplTest {
 	@Mock
 	private IUsersDao iUsersDao;
 
-	@InjectMocks
-	private UsersServiceImpl usersServiceImpl;
+	//@InjectMocks
+	private IUsersService usersService;
 
+	 @BeforeEach
+	    void setUp() {
+		 usersService = new UsersServiceImpl(iUsersDao);
+	    }
+	
 	@Test
 	void test_getAllUsers() { // given
 		Users user1 = new Users();
@@ -63,7 +68,7 @@ class UsersServiceImplTest {
 				.thenReturn(new ArrayList<>(Arrays.asList(user1, user2)));
 
 		// Assert
-		assertThat(usersServiceImpl.getAllUsers()).containsExactly(usersDto, usersDto2);
+		assertThat(usersService.getAllUsers()).containsExactly(usersDto, usersDto2);
 	}
 
 	@Test
@@ -85,7 +90,7 @@ class UsersServiceImplTest {
 		// When
 		when(iUsersDao.findById(1L)).thenReturn(Optional.of(user));
 
-		UsersDto usersDto1 = usersServiceImpl.getUserById(1L);
+		UsersDto usersDto1 = usersService.getUserById(1L);
 		// Then
 		assertNotNull(usersDto1);
 		assertEquals(1L, usersDto1.getId());
@@ -102,7 +107,7 @@ class UsersServiceImplTest {
 				.thenReturn(Optional.empty());
 
 		// Assert
-		assertThat(usersServiceImpl.getUserById(1)).isNull();
+		assertThat(usersService.getUserById(1)).isNull();
 	}
 
 	@Test
@@ -124,7 +129,7 @@ class UsersServiceImplTest {
 
 		given(iUsersDao.save(any(Users.class))).willReturn(users);
 		// When
-		UsersDto usersDto1 = usersServiceImpl.createNewUser(usersDto);
+		UsersDto usersDto1 = usersService.createNewUser(usersDto);
 
 		// then
 		assertNotNull(usersDto1);
@@ -157,7 +162,7 @@ class UsersServiceImplTest {
 		// when
 		given(iUsersDao.save(any(Users.class))).willThrow(UserIdExceptions.class);
 		// then
-		assertThrows(UserIdExceptions.class, () -> usersServiceImpl.createNewUser(usersDto));
+		assertThrows(UserIdExceptions.class, () -> usersService.createNewUser(usersDto));
 	}
 
 	@Test
@@ -172,7 +177,7 @@ class UsersServiceImplTest {
 
 		given(iUsersDao.findByuserMatricola(any())).willReturn(users);
 		// When
-		usersServiceImpl.deleteUser(users.getUserMatricola());
+		usersService.deleteUser(users.getUserMatricola());
 
 		// then
 		then(iUsersDao).should().delete(users);
@@ -190,7 +195,7 @@ class UsersServiceImplTest {
 		given(iUsersDao.findByuserMatricola(any())).willReturn(nullable(Users.class));
 
 		// then
-		assertThrows(UserIdExceptions.class, () -> usersServiceImpl.deleteUser("70001"));
+		assertThrows(UserIdExceptions.class, () -> usersService.deleteUser("70001"));
 	}
 
 	@Test
@@ -221,7 +226,7 @@ class UsersServiceImplTest {
 		given(iUsersDao.save(any(Users.class))).willReturn(saveUsers);
 
 		// When
-		UsersDto usersDto1 = usersServiceImpl.updateUser(1L, usersDto);
+		UsersDto usersDto1 = usersService.updateUser(1L, usersDto);
 		// Then
 		assertEquals(usersDto1.getUserName(), saveUsers.getUserName());
 		assertEquals(usersDto1.getId(), saveUsers.getId());
@@ -239,7 +244,7 @@ class UsersServiceImplTest {
 	@Test
 	void test_UserUpdateThrows() {
 		UsersDto usersDto = new UsersDto();
-		assertThrows(UserNotFoundException.class, () -> usersServiceImpl.updateUser(1L, usersDto));
+		assertThrows(UserNotFoundException.class, () -> usersService.updateUser(1L, usersDto));
 	}
 	
 	
@@ -254,7 +259,7 @@ class UsersServiceImplTest {
 		given(iUsersDao.findById(anyLong())).willReturn(Optional.of(users));
 		
 		//then
-		assertThrows(UserIdExceptions.class,()->usersServiceImpl.updateUser(1L, usersDto));
+		assertThrows(UserIdExceptions.class,()->usersService.updateUser(1L, usersDto));
 		
 
 	}	
